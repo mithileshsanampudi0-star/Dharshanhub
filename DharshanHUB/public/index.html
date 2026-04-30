@@ -1,0 +1,3118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHARSHAN HUB - Official Trust Portal</title>
+    
+    <!-- ==========================================================================
+         EXTERNAL RESOURCES
+         ========================================================================== -->
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons (Lightweight SVG icons) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- ==========================================================================
+         GLOBAL STYLESHEET
+         ========================================================================== -->
+    <style>
+        /* --------------------------------------------------------------------------
+           1. CSS VARIABLES & THEME SETUP
+           -------------------------------------------------------------------------- */
+        :root {
+            /* Primary Color Palette (Deep Reds & Maroons reflecting divinity) */
+            --primary-dark: #4a0404;
+            --primary: #8a1c1c;
+            --primary-light: #fdf2f2;
+            --primary-hover: #a12424;
+            
+            /* Accent Color Palette (Gold for auspiciousness) */
+            --accent-gold: #d4af37;
+            --accent-gold-light: #fff9e6;
+            --accent-gold-dark: #b89628;
+            --accent-gold-hover: #ebd076;
+            
+            /* UI Background Colors */
+            --bg-main: #ffffff;
+            --bg-alt: #f8fafc;
+            --bg-pattern: #f1f5f9;
+            --bg-overlay: rgba(0, 0, 0, 0.65);
+            
+            /* Text Colors */
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --text-light: #94a3b8;
+            --text-inverse: #ffffff;
+            
+            /* Border & Divider Colors */
+            --border-color: #e2e8f0;
+            --border-light: #f1f5f9;
+            
+            /* Status/Feedback Colors */
+            --success: #10b981;
+            --success-bg: #d1fae5;
+            --warning: #f59e0b;
+            --warning-bg: #fef3c7;
+            --danger: #ef4444;
+            --danger-bg: #fee2e2;
+            --info: #3b82f6;
+            --info-bg: #dbeafe;
+
+            /* Typography */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Lato', sans-serif;
+            
+            /* Layout & Spacing */
+            --container-max: 1280px;
+            --header-height: 80px;
+            --section-padding-y: 5rem;
+            
+            /* Border Radii */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --radius-full: 9999px;
+            
+            /* Box Shadows (Ranging from subtle to prominent) */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-gold: 0 4px 14px 0 rgba(212, 175, 55, 0.39);
+            --shadow-primary: 0 4px 14px 0 rgba(138, 28, 28, 0.39);
+            
+            /* Transitions */
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* --------------------------------------------------------------------------
+           2. CSS RESET & BASE STYLES
+           -------------------------------------------------------------------------- */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--primary-dark);
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color var(--transition-fast);
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        button, input, select, textarea {
+            font-family: inherit;
+            border: none;
+            outline: none;
+            background: none;
+            font-size: 1rem;
+        }
+
+        button {
+            cursor: pointer;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --------------------------------------------------------------------------
+           3. BACKGROUND PATTERNS & UTILITIES
+           -------------------------------------------------------------------------- */
+        
+        /* Subtle dotted pattern for sections */
+        .pattern-bg {
+            background-image: 
+                radial-gradient(var(--accent-gold) 1px, transparent 1px),
+                radial-gradient(var(--accent-gold) 1px, transparent 1px);
+            background-position: 0 0, 20px 20px;
+            background-size: 40px 40px;
+            background-color: var(--primary-light);
+            opacity: 0.9;
+        }
+
+        /* Utility Classes for Layout */
+        .container {
+            width: 100%;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-padding { padding: var(--section-padding-y) 0; }
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+        
+        /* Margins */
+        .mt-1 { margin-top: 0.5rem; } .mt-2 { margin-top: 1rem; } .mt-3 { margin-top: 1.5rem; } .mt-4 { margin-top: 2rem; } .mt-5 { margin-top: 3rem; }
+        .mb-1 { margin-bottom: 0.5rem; } .mb-2 { margin-bottom: 1rem; } .mb-3 { margin-bottom: 1.5rem; } .mb-4 { margin-bottom: 2rem; } .mb-5 { margin-bottom: 3rem; }
+        
+        /* Flexbox */
+        .flex { display: flex; }
+        .flex-col { display: flex; flex-direction: column; }
+        .items-center { align-items: center; }
+        .items-start { align-items: flex-start; }
+        .items-end { align-items: flex-end; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-end { justify-content: flex-end; }
+        .flex-wrap { flex-wrap: wrap; }
+        .flex-1 { flex: 1; }
+        
+        /* Gaps */
+        .gap-1 { gap: 0.5rem; } .gap-2 { gap: 1rem; } .gap-3 { gap: 1.5rem; } .gap-4 { gap: 2rem; } .gap-5 { gap: 3rem; }
+
+        /* CSS Grid */
+        .grid { display: grid; }
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+        /* Responsive Breakpoints */
+        @media (min-width: 640px) {
+            .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (min-width: 768px) {
+            .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+        @media (min-width: 1024px) {
+            .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .lg\:col-span-2 { grid-column: span 2 / span 2; }
+            .lg\:col-span-3 { grid-column: span 3 / span 3; }
+        }
+
+        .d-none { display: none !important; }
+
+        /* --------------------------------------------------------------------------
+           4. TYPOGRAPHY & TEXT UTILITIES
+           -------------------------------------------------------------------------- */
+        .text-sm { font-size: 0.875rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-3xl { font-size: 1.875rem; }
+        
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .font-light { font-weight: 300; }
+        
+        .text-primary { color: var(--primary); }
+        .text-primary-dark { color: var(--primary-dark); }
+        .text-gold { color: var(--accent-gold); }
+        .text-muted { color: var(--text-muted); }
+        .text-white { color: var(--text-inverse); }
+
+        /* --------------------------------------------------------------------------
+           5. BUTTONS & CONTROLS
+           -------------------------------------------------------------------------- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            border: 2px solid transparent;
+            text-align: center;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Ripple Effect for Buttons */
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0, 0); opacity: 0.5; }
+            20% { transform: scale(25, 25); opacity: 0.3; }
+            100% { opacity: 0; transform: scale(40, 40); }
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: var(--shadow-primary);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            background: linear-gradient(135deg, var(--primary-hover), var(--primary-dark));
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+            color: white;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .btn-gold:hover:not(:disabled) {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .btn-outline {
+            border-color: var(--border-color);
+            color: var(--text-main);
+            background: transparent;
+        }
+
+        .btn-outline:hover:not(:disabled) {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+        
+        .btn-outline-primary {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline-primary:hover:not(:disabled) {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* --------------------------------------------------------------------------
+           6. NAVIGATION / HEADER
+           -------------------------------------------------------------------------- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+            transition: all var(--transition-normal);
+        }
+
+        header.scrolled {
+            box-shadow: var(--shadow-md);
+            height: calc(var(--header-height) - 10px);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: var(--shadow-gold);
+            transition: transform var(--transition-bounce);
+        }
+        
+        .logo:hover .logo-icon {
+            transform: rotate(15deg) scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            color: var(--text-main);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: all var(--transition-normal);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1.25rem;
+            align-items: center;
+        }
+
+        .action-icon-btn {
+            position: relative;
+            background: var(--bg-alt);
+            color: var(--text-main);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+            border: 1px solid var(--border-color);
+        }
+
+        .action-icon-btn:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            border: 2px solid white;
+            transition: transform var(--transition-bounce);
+        }
+        
+        .cart-badge.bump {
+            transform: scale(1.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links {
+                position: fixed;
+                top: var(--header-height);
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - var(--header-height));
+                background: white;
+                flex-direction: column;
+                justify-content: center;
+                gap: 2rem;
+                transition: left var(--transition-normal);
+                box-shadow: inset 0 10px 15px -3px rgba(0,0,0,0.05);
+            }
+            .nav-links.show { left: 0; }
+            .mobile-menu-btn { display: block; }
+        }
+
+        /* --------------------------------------------------------------------------
+           7. SINGLE PAGE APPLICATION (SPA) VIEW MANAGEMENT
+           -------------------------------------------------------------------------- */
+        main {
+            margin-top: var(--header-height);
+            flex: 1;
+        }
+
+        .page-view {
+            display: none;
+            opacity: 0;
+            animation: viewFadeIn var(--transition-slow) forwards;
+            min-height: calc(100vh - var(--header-height));
+        }
+
+        .page-view.active { display: block; }
+
+        @keyframes viewFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --------------------------------------------------------------------------
+           8. FORMS & INPUTS
+           -------------------------------------------------------------------------- */
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+            background: var(--bg-main);
+            color: var(--text-main);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+        }
+        
+        .form-control:disabled {
+            background-color: var(--bg-alt);
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-text {
+            display: block;
+            margin-top: 0.35rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Form Row for multiple inputs side by side */
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .form-row .form-group {
+            margin-bottom: 0;
+            flex: 1;
+        }
+
+        @media (max-width: 640px) {
+            .form-row { flex-direction: column; }
+        }
+
+        /* --------------------------------------------------------------------------
+           9. CARDS & CONTAINERS
+           -------------------------------------------------------------------------- */
+        .card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+            border: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            background: var(--bg-alt);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .card-header h3 {
+            font-size: 1.25rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .card-footer {
+            padding: 1.5rem;
+            background: var(--bg-alt);
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* --------------------------------------------------------------------------
+           10. BADGES, ALERTS & TABLES
+           -------------------------------------------------------------------------- */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.35rem 0.85rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .badge-success { background: var(--success-bg); color: var(--success); }
+        .badge-warning { background: var(--warning-bg); color: var(--warning); }
+        .badge-danger { background: var(--danger-bg); color: var(--danger); }
+        .badge-info { background: var(--info-bg); color: var(--info); }
+        .badge-gold { background: var(--accent-gold-light); color: var(--accent-gold-dark); }
+        .badge-primary { background: var(--primary-light); color: var(--primary); }
+
+        .alert {
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            border-left: 4px solid;
+            line-height: 1.5;
+        }
+
+        .alert-info { background: var(--info-bg); color: #1e3a8a; border-left-color: var(--info); }
+        .alert-warning { background: var(--warning-bg); color: #78350f; border-left-color: var(--warning); }
+        .alert-danger { background: var(--danger-bg); color: #7f1d1d; border-left-color: var(--danger); }
+        
+        .alert i { flex-shrink: 0; margin-top: 2px; }
+
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .table th, .table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: middle;
+        }
+
+        .table th {
+            background: var(--bg-alt);
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .table tr:last-child td { border-bottom: none; }
+        .table tbody tr:hover { background: var(--primary-light); }
+
+        /* --------------------------------------------------------------------------
+           11. MODALS & TOAST NOTIFICATIONS
+           -------------------------------------------------------------------------- */
+        #toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            pointer-events: none;
+        }
+
+        .toast {
+            min-width: 320px;
+            max-width: 400px;
+            background: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xl);
+            padding: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transform: translateX(120%);
+            transition: transform var(--transition-bounce), opacity var(--transition-normal);
+            border-left: 4px solid var(--success);
+            pointer-events: auto;
+            opacity: 0;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .toast.error { border-left-color: var(--danger); }
+        .toast.warning { border-left-color: var(--warning); }
+        .toast.info { border-left-color: var(--info); }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-overlay);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            transform: scale(0.95) translateY(20px);
+            transition: all var(--transition-bounce);
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-content.modal-lg { max-width: 800px; }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            background: var(--bg-alt);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+        }
+
+        .modal-close {
+            background: var(--bg-alt);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all var(--transition-fast);
+        }
+        .modal-close:hover { background: var(--danger-bg); color: var(--danger); transform: rotate(90deg); }
+
+        /* --------------------------------------------------------------------------
+           12. HERO SECTION & NEW ANIMATIONS (Floating Divine Lights)
+           -------------------------------------------------------------------------- */
+        .hero {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2a0202 0%, var(--primary-dark) 50%, #1a0101 100%);
+        }
+
+        /* The Animated Diya/Light Particles Container */
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            bottom: -50px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 15px 5px rgba(212, 175, 55, 0.6), 0 0 30px 10px rgba(255, 165, 0, 0.4);
+            animation: floatUp 15s infinite linear;
+            opacity: 0;
+        }
+
+        /* Generate multiple particles with CSS variables for random-like distribution */
+        .particle:nth-child(1) { left: 10%; animation-duration: 12s; animation-delay: 0s; transform: scale(0.8); }
+        .particle:nth-child(2) { left: 25%; animation-duration: 18s; animation-delay: 2s; transform: scale(1.2); }
+        .particle:nth-child(3) { left: 40%; animation-duration: 14s; animation-delay: 4s; transform: scale(0.9); }
+        .particle:nth-child(4) { left: 55%; animation-duration: 19s; animation-delay: 1s; transform: scale(1.5); }
+        .particle:nth-child(5) { left: 70%; animation-duration: 15s; animation-delay: 5s; transform: scale(0.7); }
+        .particle:nth-child(6) { left: 85%; animation-duration: 17s; animation-delay: 3s; transform: scale(1.1); }
+        .particle:nth-child(7) { left: 15%; animation-duration: 13s; animation-delay: 6s; transform: scale(1.3); }
+        .particle:nth-child(8) { left: 80%; animation-duration: 16s; animation-delay: 7s; transform: scale(0.8); }
+        .particle:nth-child(9) { left: 50%; animation-duration: 20s; animation-delay: 8s; transform: scale(1.4); }
+
+        @keyframes floatUp {
+            0% { bottom: -50px; transform: translateX(0) scale(var(--scale, 1)); opacity: 0; }
+            10% { opacity: 1; }
+            50% { transform: translateX(20px) scale(var(--scale, 1)); }
+            90% { opacity: 0.8; }
+            100% { bottom: 110%; transform: translateX(-20px) scale(var(--scale, 1)); opacity: 0; }
+        }
+
+        /* Vignette overlay */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Cinematic Text Reveal Animation */
+        .reveal-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--accent-gold);
+            animation: typing 2.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent-gold); } }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem); /* Responsive typography */
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
+            line-height: 1.1;
+        }
+        
+        .hero-title span {
+            color: var(--accent-gold);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--accent-gold-light);
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            max-width: 700px;
+            margin-inline: auto;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2s forwards; /* Delay to sync with typing */
+        }
+        
+        .hero-buttons {
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2.5s forwards;
+        }
+
+        /* --------------------------------------------------------------------------
+           13. SECTION TITLES & LAYOUT COMPONENTS
+           -------------------------------------------------------------------------- */
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        .title-divider {
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            margin: 1.5rem auto;
+            position: relative;
+        }
+
+        .title-divider::before {
+            content: '❖';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--primary);
+            font-size: 1.5rem;
+            background: var(--bg-main);
+            padding: 0 10px;
+        }
+        
+        /* Pattern bg adjustments for divider */
+        .pattern-bg .title-divider::before {
+            background: transparent;
+        }
+
+        /* --------------------------------------------------------------------------
+           14. FEATURE CARDS (HOME)
+           -------------------------------------------------------------------------- */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: -5rem;
+            position: relative;
+            z-index: 20;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            text-align: center;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+            border-bottom: 5px solid var(--accent-gold);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px -12px rgba(138, 28, 28, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            transition: transform var(--transition-bounce);
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(10deg);
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow-primary);
+        }
+
+        /* --------------------------------------------------------------------------
+           15. TOOLBARS & FILTERS
+           -------------------------------------------------------------------------- */
+        .toolbar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 3rem;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            border: 1px solid var(--border-light);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .toolbar .form-group {
+            margin-bottom: 0;
+            min-width: 200px;
+            flex: 1;
+        }
+
+        /* --------------------------------------------------------------------------
+           16. ACCOMMODATION MODULE (NEW)
+           -------------------------------------------------------------------------- */
+        .room-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border: none;
+            box-shadow: var(--shadow-md);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all var(--transition-normal);
+            background: white;
+        }
+        
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .room-image-placeholder {
+            height: 200px;
+            background: linear-gradient(135deg, var(--bg-alt), #e2e8f0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Subtle architectural pattern for room placeholder */
+        .room-image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(90deg, transparent 95%, rgba(0,0,0,0.05) 95%),
+                              linear-gradient(transparent 95%, rgba(0,0,0,0.05) 95%);
+            background-size: 20px 20px;
+        }
+
+        .room-type-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--bg-overlay);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: bold;
+            backdrop-filter: blur(4px);
+        }
+
+        .room-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .room-title {
+            font-size: 1.25rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-heading);
+        }
+
+        .room-location {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .room-amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .amenity-tag {
+            background: var(--bg-alt);
+            border: 1px solid var(--border-light);
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .room-footer {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .room-price-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .room-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-gold-dark);
+            line-height: 1;
+        }
+
+        /* --------------------------------------------------------------------------
+           17. CALENDAR & DARSHAN MODULE
+           -------------------------------------------------------------------------- */
+        .calendar-wrapper {
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-light);
+            padding: 1rem;
+        }
+           
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-top: 1rem;
+        }
+        
+        .cal-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-main);
+        }
+        
+        .cal-header {
+            font-weight: 700;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border: none;
+            cursor: default;
+            aspect-ratio: auto;
+            padding-bottom: 0.5rem;
+            background: transparent;
+        }
+        
+        .cal-day.available { border-color: var(--success); }
+        .cal-day.available::after { content:''; position:absolute; bottom:4px; width:6px; height:6px; background:var(--success); border-radius:50%; }
+        
+        .cal-day.fast-filling { border-color: var(--warning); background: var(--warning-bg); }
+        .cal-day.fast-filling::after { content:''; position:absolute; bottom:4px; width:6px; height:6px; background:var(--warning); border-radius:50%; }
+        
+        .cal-day.full { background: var(--bg-alt); color: var(--text-light); border-color: var(--border-light); cursor: not-allowed; text-decoration: line-through; }
+        
+        .cal-day.selected { 
+            background: var(--primary); 
+            color: white; 
+            border-color: var(--primary); 
+            transform: scale(1.05); 
+            box-shadow: var(--shadow-md); 
+            z-index: 2; 
+        }
+        .cal-day.selected::after { background: white; }
+        
+        .cal-day:hover:not(.full):not(.cal-header):not(.selected) { 
+            transform: scale(1.05); 
+            box-shadow: var(--shadow-sm); 
+            border-color: var(--primary);
+            z-index: 1; 
+        }
+
+        /* --------------------------------------------------------------------------
+           18. STEPS INDICATOR (CHECKOUT)
+           -------------------------------------------------------------------------- */
+        .checkout-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            position: relative;
+            max-width: 600px;
+            margin-inline: auto;
+        }
+        
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            flex: 1;
+        }
+        
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: all var(--transition-normal);
+            box-shadow: 0 0 0 5px var(--bg-pattern); /* Creates gap effect */
+        }
+        
+        .step.active { color: var(--primary-dark); font-weight: 600; }
+        .step.active .step-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: 0 0 0 5px var(--primary-light);
+        }
+        
+        .step.completed .step-circle {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+            box-shadow: 0 0 0 5px var(--success-bg);
+        }
+
+        /* --------------------------------------------------------------------------
+           19. ACCORDION (FAQ)
+           -------------------------------------------------------------------------- */
+        .accordion-item {
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            background: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--primary-dark);
+            cursor: pointer;
+            transition: background var(--transition-fast);
+        }
+
+        .accordion-header:hover { background: var(--bg-alt); }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-slow);
+            background: var(--bg-alt);
+        }
+
+        .accordion-content-inner {
+            padding: 1.25rem 1.5rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-light);
+            line-height: 1.7;
+        }
+
+        .accordion-item.active .accordion-content { max-height: 800px; }
+        .accordion-item.active .accordion-icon { transform: rotate(180deg); color: var(--primary); }
+        .accordion-icon { transition: transform var(--transition-normal); color: var(--text-light); }
+
+        /* --------------------------------------------------------------------------
+           20. FOOTER
+           -------------------------------------------------------------------------- */
+        footer {
+            background: linear-gradient(to bottom, #2a0202, #1a0101);
+            color: white;
+            padding: 5rem 0 2rem;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Subtle background mandala in footer */
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-title {
+            color: var(--accent-gold);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+            font-family: var(--font-heading);
+            letter-spacing: 0.5px;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 50px; height: 2px;
+            background: var(--accent-gold);
+        }
+
+        .footer-links li { margin-bottom: 0.85rem; }
+        .footer-links a {
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .footer-links a:hover { color: white; padding-left: 8px; }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #94a3b8;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --------------------------------------------------------------------------
+           21. UTILITIES & ANIMATIONS
+           -------------------------------------------------------------------------- */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); } 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } }
+        @keyframes rotateSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+        .pulse-btn { animation: pulseGlow 2s infinite; }
+        
+        .empty-state {
+            text-align: center;
+            padding: 5rem 2rem;
+            color: var(--text-muted);
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px dashed var(--border-color);
+        }
+        .empty-state svg { width: 80px; height: 80px; margin-bottom: 1.5rem; color: var(--border-light); stroke-width: 1px; }
+
+        /* Simulated Ticket PDF */
+        .ticket-preview {
+            border: 2px solid var(--border-color);
+            padding: 2.5rem;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 100 100"><text x="50" y="50" font-size="10" fill="%23f1f5f9" text-anchor="middle" dominant-baseline="middle" transform="rotate(-45 50 50)">OFFICIAL</text></svg>');
+            font-family: monospace;
+            border-radius: var(--radius-sm);
+        }
+        .ticket-header { text-align: center; border-bottom: 2px dashed var(--text-muted); padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
+        .ticket-row { display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 1.1rem; }
+        .barcode { height: 50px; background: repeating-linear-gradient(90deg, #111 0, #111 3px, transparent 3px, transparent 6px, #111 6px, #111 12px, transparent 12px, transparent 15px); margin: 2rem 0; width: 100%; border-radius: 2px; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================================================
+         HEADER / NAVIGATION
+         ========================================================================== -->
+    <header id="main-header">
+        <div class="container nav-container">
+            <!-- Brand Logo -->
+            <a href="#home" class="logo">
+                <div class="logo-icon">
+                    <i data-lucide="flower-2"></i>
+                </div>
+               DHARSHAN HUB
+            </a>
+            
+            <!-- Navigation Links -->
+            <nav class="nav-links" id="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#sevas" class="nav-link">Sevas</a>
+                <a href="#darshan" class="nav-link">Darshan</a>
+                <a href="#accommodation" class="nav-link">Accommodation</a>
+                <a href="#info" class="nav-link">Guidelines</a>
+                <a href="#help" class="nav-link">Help/Contact</a>
+            </nav>
+
+            <!-- Actions (Cart, Profile, Mobile Menu) -->
+            <div class="nav-actions">
+                <a href="#my-bookings" class="action-icon-btn" title="My Bookings">
+                    <i data-lucide="user"></i>
+                </a>
+                <a href="#cart" class="action-icon-btn" title="Cart" id="cart-btn">
+                    <i data-lucide="shopping-basket"></i>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </a>
+                <button class="mobile-menu-btn" id="mobile-menu-toggle">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================================================
+         MAIN CONTENT AREA (SPA VIEWS)
+         ========================================================================== -->
+    <main id="app-root">
+        
+        <!-- --------------------------------------------------------------------------
+             VIEW 1: HOME (Landing Page)
+             -------------------------------------------------------------------------- -->
+        <section id="view-home" class="page-view active">
+            <!-- Hero with CSS Floating Divine Lights -->
+            <div class="hero">
+                <div class="hero-particles">
+                    <!-- Particles created sequentially for random distribution effect -->
+                    <div class="particle" style="--scale: 0.8"></div>
+                    <div class="particle" style="--scale: 1.2"></div>
+                    <div class="particle" style="--scale: 0.9"></div>
+                    <div class="particle" style="--scale: 1.5"></div>
+                    <div class="particle" style="--scale: 0.7"></div>
+                    <div class="particle" style="--scale: 1.1"></div>
+                    <div class="particle" style="--scale: 1.3"></div>
+                    <div class="particle" style="--scale: 0.8"></div>
+                    <div class="particle" style="--scale: 1.4"></div>
+                </div>
+                
+                <div class="container hero-content">
+                    <h1 class="hero-title"><span class="reveal-text">Om Namo Venkateshaya</span></h1>
+                    <p class="hero-subtitle">Official Trust Portal for Online Booking of Sevas, Darshan, and Accommodation. Experience the divine presence with devotion, transparency, and ease.</p>
+                    <div class="flex justify-center flex-wrap gap-3 hero-buttons">
+                        <a href="#darshan" class="btn btn-gold pulse-btn"><i data-lucide="sun"></i> Book Special Darshan</a>
+                        <a href="#accommodation" class="btn btn-outline" style="border-color: rgba(255,255,255,0.5); color: white;"><i data-lucide="building"></i> Find Rooms</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Core Services Feature Grid -->
+            <div class="container">
+                <div class="feature-grid">
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon"><i data-lucide="sparkles"></i></div>
+                        <h3>Daily Sevas</h3>
+                        <p class="text-muted mt-2 mb-3">Participate in sacred daily rituals including Suprabhatam, Archana, and Thomala. Witness the divine awakening.</p>
+                        <a href="#sevas" class="btn btn-outline mt-auto">Explore Sevas</a>
+                    </div>
+                    <div class="feature-card animate-on-scroll" style="transition-delay: 0.1s;">
+                        <div class="feature-icon"><i data-lucide="users"></i></div>
+                        <h3>Special Darshan</h3>
+                        <p class="text-muted mt-2 mb-3">Book special entry tickets to reduce waiting time for the Lord's Darshan. Secure your slots 120 days in advance.</p>
+                        <a href="#darshan" class="btn btn-outline mt-auto">Book Darshan</a>
+                    </div>
+                    <div class="feature-card animate-on-scroll" style="transition-delay: 0.2s;">
+                        <div class="feature-icon"><i data-lucide="home"></i></div>
+                        <h3>Rest Houses</h3>
+                        <p class="text-muted mt-2 mb-3">Comfortable AC & Non-AC accommodation maintained by the Devasthanam for pilgrims arriving from across the globe.</p>
+                        <a href="#accommodation" class="btn btn-outline mt-auto">Find Rooms</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Announcements Section -->
+            <div class="section-padding pattern-bg mt-5">
+                <div class="container">
+                    <div class="section-title animate-on-scroll">
+                        <h2>Important Announcements</h2>
+                        <div class="title-divider"></div>
+                        <p>Stay updated with the latest official guidelines and notices from the Trust Board.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="card animate-on-scroll">
+                            <div class="card-body">
+                                <div class="badge badge-warning mb-2">New Update</div>
+                                <h4>Virtual Seva Bookings Open</h4>
+                                <p class="text-muted mt-2">Devotees can now participate in Kalyanotsavam virtually. Prasadam will be shipped to the registered address via speed post. <a href="#sevas" class="text-primary font-semibold">Book Virtual Seva →</a></p>
+                            </div>
+                        </div>
+                        <div class="card animate-on-scroll" style="transition-delay: 0.1s;">
+                            <div class="card-body">
+                                <div class="badge badge-danger mb-2">Alert</div>
+                                <h4>Strict Dress Code Implementation</h4>
+                                <p class="text-muted mt-2">Please note that traditional Indian wear is strictly mandatory for all Sevas and Special Darshan. Entry will be denied otherwise. <a href="#info" class="text-primary font-semibold">View Guidelines →</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --------------------------------------------------------------------------
+             VIEW 2: SEVAS
+             -------------------------------------------------------------------------- -->
+        <section id="view-sevas" class="page-view">
+            <div class="container section-padding">
+                <div class="section-title animate-on-scroll">
+                    <h2>Divine Sevas</h2>
+                    <div class="title-divider"></div>
+                    <p>Book your participation in the sacred rituals. Please review the reporting times and strict guidelines before proceeding to checkout.</p>
+                </div>
+
+                <div class="toolbar animate-on-scroll">
+                    <div class="form-group">
+                        <label class="form-label">Filter by Type</label>
+                        <select class="form-control" id="seva-filter">
+                            <option value="all">All Sevas (Daily, Weekly, Annual)</option>
+                            <option value="daily">Daily Sevas (Nitya Sevas)</option>
+                            <option value="weekly">Weekly Sevas (Vara Sevas)</option>
+                            <option value="annual">Annual/Special Sevas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Availability Date</label>
+                        <input type="date" class="form-control" id="seva-date-filter">
+                    </div>
+                </div>
+
+                <div class="alert alert-info animate-on-scroll">
+                    <i data-lucide="info" class="mt-1"></i>
+                    <div>
+                        <strong class="font-semibold" style="display:block; margin-bottom:0.25rem;">Note on Seva Quotas:</strong> 
+                        Online quotas are released 120 days in advance on the first Tuesday of every month at 10:00 AM. Ensure you have valid Government ID proof (Aadhaar/Passport) ready for all pilgrims.
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5" id="sevas-grid">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- --------------------------------------------------------------------------
+             VIEW 3: DARSHAN
+             -------------------------------------------------------------------------- -->
+        <section id="view-darshan" class="page-view pattern-bg">
+            <div class="container section-padding">
+                <div class="section-title animate-on-scroll">
+                    <h2>Special Entry Darshan (₹300)</h2>
+                    <div class="title-divider"></div>
+                    <p>Book your specific time slot for a seamless Darshan experience. The cost includes two free Laddu Prasadams per pilgrim.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                    <!-- Calendar Selection -->
+                    <div class="card lg:col-span-2 animate-on-scroll">
+                        <div class="card-header">
+                            <h3><i data-lucide="calendar" class="text-primary"></i> 1. Select Availability</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="flex justify-between items-center mb-4">
+                                <h4 class="text-xl">September 2026</h4>
+                                <div class="flex gap-2">
+                                    <button class="btn btn-outline" style="padding: 0.5rem;"><i data-lucide="chevron-left"></i></button>
+                                    <button class="btn btn-outline" style="padding: 0.5rem;"><i data-lucide="chevron-right"></i></button>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-wrap gap-4 mb-4 text-sm bg-alt p-3 rounded" style="background: var(--bg-alt); padding: 1rem; border-radius: var(--radius-md);">
+                                <span class="flex items-center gap-2"><span style="width:14px;height:14px;background:var(--success-bg);border:2px solid var(--success);border-radius:50%;"></span> Available</span>
+                                <span class="flex items-center gap-2"><span style="width:14px;height:14px;background:var(--warning-bg);border:2px solid var(--warning);border-radius:50%;"></span> Fast Filling</span>
+                                <span class="flex items-center gap-2"><span style="width:14px;height:14px;background:var(--border-light);border:2px solid var(--text-light);border-radius:50%;"></span> Quota Full</span>
+                            </div>
+
+                            <div class="calendar-wrapper">
+                                <div class="calendar-grid" id="darshan-calendar">
+                                    <!-- Generated dynamically via JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Booking Form -->
+                    <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
+                        <div class="card-header">
+                            <h3><i data-lucide="ticket" class="text-primary"></i> 2. Booking Details</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="darshan-form">
+                                <div class="form-group">
+                                    <label class="form-label">Selected Date</label>
+                                    <input type="text" class="form-control" id="d-selected-date" readonly placeholder="Select a date from calendar" style="font-weight: 600; color: var(--primary);">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Preferred Time Slot</label>
+                                    <select class="form-control" id="d-time" disabled required>
+                                        <option value="">Select Date First...</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Number of Pilgrims (Max 6)</label>
+                                    <select class="form-control" id="d-count" disabled required>
+                                        <option value="1">1 Pilgrim</option>
+                                        <option value="2">2 Pilgrims</option>
+                                        <option value="3">3 Pilgrims</option>
+                                        <option value="4">4 Pilgrims</option>
+                                        <option value="5">5 Pilgrims</option>
+                                        <option value="6">6 Pilgrims</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="alert alert-warning mb-4" style="font-size: 0.85rem; padding: 1rem; background: var(--accent-gold-light); border-left-color: var(--accent-gold);">
+                                    <i data-lucide="alert-circle" style="color: var(--accent-gold-dark);"></i>
+                                    <div><strong>Important:</strong> Primary pilgrim must be present. ID proofs will be verified at Vaikuntam Queue Complex.</div>
+                                </div>
+                                
+                                <div class="flex justify-between items-center mb-4 text-lg">
+                                    <span class="text-muted">Total Cost:</span>
+                                    <strong class="text-primary-dark text-xl" id="d-total-cost">₹0</strong>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary" style="width: 100%" id="d-submit" disabled><i data-lucide="shopping-cart"></i> Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --------------------------------------------------------------------------
+             VIEW 4: ACCOMMODATION (NEW IMPLEMENTATION)
+             -------------------------------------------------------------------------- -->
+        <section id="view-accommodation" class="page-view">
+             <div class="container section-padding">
+                <div class="section-title animate-on-scroll">
+                    <h2>Rest Houses & Accommodation</h2>
+                    <div class="title-divider"></div>
+                    <p>Advance booking of rooms subject to availability. Maximum stay allowed is 2 days to accommodate all devotees.</p>
+                </div>
+                
+                <!-- Accommodation Filter Toolbar -->
+                <div class="toolbar animate-on-scroll">
+                    <div class="form-group">
+                        <label class="form-label">Check-in Date</label>
+                        <input type="date" class="form-control" id="acc-checkin" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration</label>
+                        <select class="form-control" id="acc-duration">
+                            <option value="1">1 Day (24 Hrs)</option>
+                            <option value="2">2 Days (48 Hrs)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Room Type</label>
+                        <select class="form-control" id="acc-type">
+                            <option value="all">All Room Types</option>
+                            <option value="ac">AC Rooms</option>
+                            <option value="non-ac">Non-AC Rooms</option>
+                            <option value="suite">Premium Suites</option>
+                        </select>
+                    </div>
+                    <div class="form-group flex items-end">
+                        <button class="btn btn-primary" style="width: 100%; height: 50px;" id="acc-search-btn"><i data-lucide="search"></i> Search Rooms</button>
+                    </div>
+                </div>
+
+                <!-- Accommodation Grid -->
+                <div id="acc-results-container">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4" id="accommodation-grid">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <!-- --------------------------------------------------------------------------
+             VIEW 5: CART & CHECKOUT
+             -------------------------------------------------------------------------- -->
+        <section id="view-cart" class="page-view pattern-bg">
+            <div class="container section-padding checkout-container">
+                <!-- Checkout Steps -->
+                <div class="steps animate-on-scroll">
+                    <div class="step active"><div class="step-circle">1</div><span>Review Cart</span></div>
+                    <div class="step"><div class="step-circle">2</div><span>Pilgrim Details</span></div>
+                    <div class="step"><div class="step-circle">3</div><span>Payment</span></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                    <!-- Cart Items List -->
+                    <div class="lg:col-span-2">
+                        <div class="card animate-on-scroll">
+                            <div class="card-header">
+                                <h3><i data-lucide="shopping-bag" class="text-primary"></i> Your Sacred Basket</h3>
+                            </div>
+                            <div class="card-body p-0">
+                                <div id="cart-items-container">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Order Summary & Checkout -->
+                    <div>
+                        <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
+                            <div class="card-header">
+                                <h3><i data-lucide="receipt" class="text-primary"></i> Order Summary</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group mb-4">
+                                    <label class="form-label text-gold"><i data-lucide="heart" style="width:14px; display:inline;"></i> Srivari Hundi (Donation)</label>
+                                    <p class="text-sm text-muted mb-2">Support Annadanam (Free Meals) and Vidyadanam.</p>
+                                    <select class="form-control" id="donation-amount">
+                                        <option value="0">No Donation</option>
+                                        <option value="116">₹116</option>
+                                        <option value="516">₹516</option>
+                                        <option value="1116">₹1,116</option>
+                                        <option value="5116">₹5,116</option>
+                                    </select>
+                                </div>
+                                
+                                <hr style="border:0; border-top:1px dashed var(--border-color); margin: 1.5rem 0;">
+                                
+                                <div class="flex justify-between mb-2 text-muted">
+                                    <span>Services Subtotal:</span>
+                                    <strong id="cart-subtotal" style="color: var(--text-main);">₹0</strong>
+                                </div>
+                                <div class="flex justify-between mb-2 text-muted">
+                                    <span>Donation Amount:</span>
+                                    <strong id="cart-donation-disp" style="color: var(--text-main);">₹0</strong>
+                                </div>
+                                <div class="flex justify-between mb-4 text-muted text-sm">
+                                    <span>Taxes & Processing Fee:</span>
+                                    <strong style="color: var(--text-main);">₹0</strong>
+                                </div>
+                                
+                                <div class="flex justify-between items-end mb-4 p-3 bg-alt rounded" style="background: var(--bg-alt); border-radius: var(--radius-md);">
+                                    <span class="font-bold text-lg">Total Payable:</span>
+                                    <strong class="text-2xl text-primary-dark" id="cart-total">₹0</strong>
+                                </div>
+                                
+                                <button class="btn btn-gold" style="width: 100%; height: 50px; font-size: 1.1rem;" id="checkout-btn" disabled>
+                                    Proceed to Pilgrim Details <i data-lucide="arrow-right"></i>
+                                </button>
+                                
+                                <p class="text-center text-xs text-muted mt-3">By proceeding, you agree to our strict cancellation policies and dress code guidelines.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --------------------------------------------------------------------------
+             VIEW 6: MY BOOKINGS (DASHBOARD)
+             -------------------------------------------------------------------------- -->
+        <section id="view-my-bookings" class="page-view">
+            <div class="container section-padding">
+                <div class="section-title animate-on-scroll">
+                    <h2>My Bookings & History</h2>
+                    <div class="title-divider"></div>
+                    <p>Manage your upcoming trips, download e-Tickets, and view transaction history.</p>
+                </div>
+
+                <div class="card animate-on-scroll max-w-5xl mx-auto" style="max-width: 1000px; margin: 0 auto;">
+                    <div class="card-header flex flex-wrap gap-3 justify-between items-center">
+                        <h3><i data-lucide="history" class="text-primary"></i> Transaction History</h3>
+                        <button class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="generateMockBooking()">
+                            <i data-lucide="refresh-cw" style="width:16px;"></i> Sync Records
+                        </button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table" id="bookings-table">
+                                <thead>
+                                    <tr>
+                                        <th>Booking ID</th>
+                                        <th>Service Details</th>
+                                        <th>Booking Date</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated dynamically via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="no-bookings-msg" class="empty-state">
+                            <i data-lucide="inbox"></i>
+                            <h4 class="mb-1">No Active Bookings Found</h4>
+                            <p class="text-sm">Your booking history will appear here once you complete a transaction.</p>
+                            <button class="btn btn-primary mt-3" onclick="window.location.hash='home'">Explore Services</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --------------------------------------------------------------------------
+             VIEW 7: HELP / CONTACT
+             -------------------------------------------------------------------------- -->
+        <section id="view-help" class="page-view">
+            <div class="container section-padding">
+                <div class="section-title animate-on-scroll">
+                    <h2>Help Desk & Grievances</h2>
+                    <div class="title-divider"></div>
+                    <p>We are here to assist you 24/7. Find answers below or raise a support ticket.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- FAQs -->
+                    <div class="animate-on-scroll">
+                        <h3 class="mb-4 text-xl flex items-center gap-2"><i data-lucide="help-circle" class="text-primary"></i> Frequently Asked Questions</h3>
+                        <div class="accordion" id="faq-accordion">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Form -->
+                    <div class="animate-on-scroll" style="transition-delay: 0.2s;">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i data-lucide="message-square" class="text-primary"></i> Submit a Grievance</h3>
+                            </div>
+                            <div class="card-body">
+                                <form id="contact-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" required placeholder="As per Govt ID">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Mobile Number</label>
+                                            <input type="tel" class="form-control" pattern="[0-9]{10}" required placeholder="10-digit number">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Booking Reference</label>
+                                            <input type="text" class="form-control" placeholder="Optional (e.g. DD-XXXXXX)">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Category</label>
+                                            <select class="form-control" required>
+                                                <option value="">Select Category</option>
+                                                <option value="refund">Refund/Payment Failure</option>
+                                                <option value="tech">Technical Glitch</option>
+                                                <option value="info">General Enquiry</option>
+                                                <option value="complaint">Complaint</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Detailed Description</label>
+                                        <textarea class="form-control" required minlength="20" placeholder="Please describe your issue in detail..."></textarea>
+                                        <span class="form-text">Minimum 20 characters required. We usually respond within 24-48 hours.</span>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" style="width: 100%;"><i data-lucide="send"></i> Submit Support Ticket</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --------------------------------------------------------------------------
+             VIEW 8: GUIDELINES & INFO
+             -------------------------------------------------------------------------- -->
+        <section id="view-info" class="page-view pattern-bg">
+            <div class="container section-padding">
+                <div class="section-title animate-on-scroll">
+                    <h2>Strict Guidelines for Devotees</h2>
+                    <div class="title-divider"></div>
+                    <p>Adherence to these rules is mandatory. Failure to comply will result in denial of entry without refund.</p>
+                </div>
+
+                <div class="card animate-on-scroll mb-5">
+                    <div class="card-header" style="background: var(--danger-bg); color: var(--danger); border-bottom-color: rgba(239,68,68,0.2);">
+                        <h3 class="flex items-center gap-2 m-0 text-danger"><i data-lucide="shield-alert"></i> Mandatory Traditional Dress Code</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-4 text-lg">To maintain the sanctity of the temple, a strict traditional dress code is enforced at all queue entries.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="bg-alt p-4 rounded-lg" style="background: var(--bg-alt); padding: 1.5rem; border-radius: var(--radius-md);">
+                                <h4 class="text-xl mb-3 text-primary-dark"><strong>For Men</strong></h4>
+                                <ul class="text-muted" style="list-style-type: none; padding-left: 0; display:flex; flex-direction:column; gap:0.5rem;">
+                                    <li class="flex items-start gap-2"><i data-lucide="check" class="text-success mt-1" style="width:16px;"></i> Dhoti (Pancha) with Shirt.</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="check" class="text-success mt-1" style="width:16px;"></i> Kurta and Pyjama.</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="x" class="text-danger mt-1" style="width:16px;"></i> <strong class="text-danger">Strictly NO:</strong> Jeans, T-Shirts, Shorts, Lungis.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-alt p-4 rounded-lg" style="background: var(--bg-alt); padding: 1.5rem; border-radius: var(--radius-md);">
+                                <h4 class="text-xl mb-3 text-primary-dark"><strong>For Women</strong></h4>
+                                <ul class="text-muted" style="list-style-type: none; padding-left: 0; display:flex; flex-direction:column; gap:0.5rem;">
+                                    <li class="flex items-start gap-2"><i data-lucide="check" class="text-success mt-1" style="width:16px;"></i> Saree or Half-Saree.</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="check" class="text-success mt-1" style="width:16px;"></i> Chudidhar with Dupatta.</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="x" class="text-danger mt-1" style="width:16px;"></i> <strong class="text-danger">Strictly NO:</strong> Western wear, Jeans, Leggings without long tops.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="card animate-on-scroll">
+                        <div class="card-header bg-success-light" style="background: var(--success-bg);">
+                            <h3 class="text-success"><i data-lucide="check-circle" class="inline-icon"></i> General DOs</h3>
+                        </div>
+                        <div class="card-body text-muted">
+                            <ul style="list-style-type: disc; padding-left: 20px; line-height: 2.2;">
+                                <li>Book tickets only through this official portal to avoid fraud.</li>
+                                <li>Carry the <strong>Original Photo ID proof</strong> used during booking. Copies are rejected.</li>
+                                <li>Report exactly 30 minutes prior to your allocated slot at the designated queue complex.</li>
+                                <li>Maintain absolute silence, patience, and chant the Lord's name in the queues.</li>
+                                <li>Deposit mobile phones and electronics at the designated counters before entry.</li>
+                                <li>Respect the volunteers and security personnel.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card animate-on-scroll" style="transition-delay: 0.1s;">
+                        <div class="card-header bg-warning-light" style="background: var(--warning-bg);">
+                            <h3 style="color: #92400e;"><i data-lucide="x-circle" class="inline-icon"></i> General DON'Ts</h3>
+                        </div>
+                        <div class="card-body text-muted">
+                            <ul style="list-style-type: disc; padding-left: 20px; line-height: 2.2;">
+                                <li>Do not trust touts or middlemen. Tickets are strictly non-transferable.</li>
+                                <li>Do not carry electronic gadgets, smartwatches, cameras, or large baggage inside.</li>
+                                <li>Do not consume or carry alcohol, non-vegetarian food, or tobacco products.</li>
+                                <li>Do not wear footwear inside the immediate temple premises or queue complexes.</li>
+                                <li>Do not argue with volunteers or attempt to break the queue system.</li>
+                                <li>Do not carry weapons or sharp objects.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================================================
+         FOOTER
+         ========================================================================== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand / About -->
+                <div>
+                    <h3 class="footer-title" style="color:white; border-bottom: none; font-size: 1.5rem; margin-bottom: 1rem;">
+                        <span style="color:var(--accent-gold);">Divya</span> Darshanam
+                    </h3>
+                    <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                        Dedicated to providing a seamless, transparent, and divine experience for all devotees worldwide. An official initiative governed by the Central Temple Trust Board.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="#" class="action-icon-btn" style="background:rgba(255,255,255,0.1); border-color:transparent; color:white;"><i data-lucide="facebook"></i></a>
+                        <a href="#" class="action-icon-btn" style="background:rgba(255,255,255,0.1); border-color:transparent; color:white;"><i data-lucide="twitter"></i></a>
+                        <a href="#" class="action-icon-btn" style="background:rgba(255,255,255,0.1); border-color:transparent; color:white;"><i data-lucide="youtube"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="footer-title">Quick Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#sevas"><i data-lucide="chevron-right" style="width:16px;"></i> Book Nitya Sevas</a></li>
+                        <li><a href="#darshan"><i data-lucide="chevron-right" style="width:16px;"></i> Special Entry Darshan</a></li>
+                        <li><a href="#accommodation"><i data-lucide="chevron-right" style="width:16px;"></i> Rest House Bookings</a></li>
+                        <li><a href="#info"><i data-lucide="chevron-right" style="width:16px;"></i> Trust Guidelines</a></li>
+                        <li><a href="#my-bookings"><i data-lucide="chevron-right" style="width:16px;"></i> Print Tickets</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support -->
+                <div>
+                    <h3 class="footer-title">Pilgrim Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#help"><i data-lucide="phone-call" style="width:16px;"></i> Toll Free: 1800-425-1111</a></li>
+                        <li><a href="#help"><i data-lucide="phone" style="width:16px;"></i> Helpdesk: 0877-2233333</a></li>
+                        <li><a href="#help"><i data-lucide="mail" style="width:16px;"></i> support@divyadarshanam.org</a></li>
+                        <li><a href="#help"><i data-lucide="message-square" style="width:16px;"></i> Raise a Grievance</a></li>
+                        <li><a href="#help"><i data-lucide="help-circle" style="width:16px;"></i> FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legal -->
+                <div>
+                    <h3 class="footer-title">Legal & Policies</h3>
+                    <ul class="footer-links">
+                        <li><a href="#info"><i data-lucide="file-text" style="width:16px;"></i> Terms & Conditions</a></li>
+                        <li><a href="#info"><i data-lucide="shield" style="width:16px;"></i> Privacy Policy</a></li>
+                        <li><a href="#info"><i data-lucide="alert-triangle" style="width:16px;"></i> Cancellation Policy</a></li>
+                        <li><a href="#info"><i data-lucide="credit-card" style="width:16px;"></i> Payment Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom flex justify-between items-center flex-wrap gap-3">
+                <span>&copy; <span id="current-year"></span> Divya Darshanam Trust Board. All Rights Reserved.</span>
+                <span class="text-sm">Designed for Devotion. Engineered with Transparency.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+         MODALS & TOAST CONTAINER
+         ========================================================================== -->
+    <div id="toast-container"></div>
+
+    <div class="modal-overlay" id="generic-modal">
+        <div class="modal-content" id="modal-container">
+            <div class="modal-header">
+                <h3 id="modal-title" style="margin: 0;">Notice</h3>
+                <button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Content injected via JS -->
+            </div>
+            <!-- Optional Footer injected via JS if needed -->
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         JAVASCRIPT APPLICATION LOGIC
+         ========================================================================== -->
+    <script>
+        /**
+         * ----------------------------------------------------------------------
+         * APPLICATION STATE & MOCK DATABASES
+         * Simulating an enterprise SPA with mock data
+         * ----------------------------------------------------------------------
+         */
+        const state = {
+            currentRoute: 'home',
+            cart: [],
+            bookings: [], // Simulated logged-in user history
+            donation: 0,
+            searchParams: {
+                accCheckIn: null,
+                accDuration: 1,
+                accType: 'all'
+            }
+        };
+
+        // Comprehensive Mock Data for Sevas
+        const sevasData = [
+            { id: 'S01', name: 'Suprabhata Seva', type: 'daily', time: '03:00 AM', price: 1000, capacity: 50, description: 'The awakening of the Lord. Experience the divine morning chants.', icon: 'sun' },
+            { id: 'S02', name: 'Thomala Seva', type: 'daily', time: '04:30 AM', price: 1500, capacity: 20, description: 'Adorning the deity with beautiful fresh flower garlands.', icon: 'flower-2' },
+            { id: 'S03', name: 'Archana', type: 'daily', time: '05:30 AM', price: 1500, capacity: 30, description: 'Recitation of the 1000 names (Sahasranamarchana) of the Lord.', icon: 'book' },
+            { id: 'S04', name: 'Kalyanotsavam', type: 'daily', time: '10:30 AM', price: 2500, capacity: 100, description: 'The celestial wedding ceremony. Couple entry allowed per ticket.', icon: 'users' },
+            { id: 'S05', name: 'Unjal Seva', type: 'daily', time: '01:00 PM', price: 800, capacity: 50, description: 'The Lord rests on a beautifully decorated swing amidst Vedic chants.', icon: 'wind' },
+            { id: 'S06', name: 'Vasantotsavam', type: 'daily', time: '03:00 PM', price: 1200, capacity: 40, description: 'Spring festival celebrated with special aromatic powders.', icon: 'sparkles' },
+            { id: 'S07', name: 'Sahasra Deepalankara', type: 'daily', time: '05:30 PM', price: 1500, capacity: 150, description: 'Evening seva where the Lord is seated among 1000 lit lamps.', icon: 'flame' },
+            { id: 'S08', name: 'Visesha Pooja', type: 'weekly', time: 'Mon 07:00 AM', price: 3000, capacity: 20, description: 'Special Monday prayers for general well-being and prosperity.', icon: 'star' },
+            { id: 'S09', name: 'Ashtadala Pada Padmaradhana', type: 'weekly', time: 'Tue 06:00 AM', price: 5000, capacity: 15, description: 'Offering of 108 golden lotuses to the Lord\'s holy feet.', icon: 'gem' },
+            { id: 'S10', name: 'Sahasra Kalasabhishekam', type: 'weekly', time: 'Wed 06:00 AM', price: 10000, capacity: 10, description: 'Holy bath utilizing water from 1000 sacred silver vessels.', icon: 'droplet' },
+            { id: 'S11', name: 'Tiruppavada Seva', type: 'weekly', time: 'Thu 06:00 AM', price: 5000, capacity: 20, description: 'A massive offering of tamarind rice covering the deity.', icon: 'utensils' },
+            { id: 'S12', name: 'Vastralankara Seva', type: 'weekly', time: 'Fri 04:30 AM', price: 15000, capacity: 5, description: 'Offering of silk garments (Melchat vastram). Extremely limited.', icon: 'shirt' },
+            { id: 'S13', name: 'Abhishekam', type: 'weekly', time: 'Fri 05:00 AM', price: 2000, capacity: 50, description: 'The holy bath. High demand seva performed on Fridays.', icon: 'droplets' },
+            { id: 'S14', name: 'Brahmotsavam Special Entry', type: 'annual', time: 'Oct 09:00 AM', price: 500, capacity: 1000, description: 'Special access during the 9-day grand annual festival.', icon: 'flag' }
+        ];
+
+        // Comprehensive Mock Data for Accommodation (NEW)
+        const accommodationData = [
+            { id: 'R01', name: 'Srinivasam Complex', location: 'Near RTC Bus Stand', type: 'ac', price: 1500, capacity: 2, amenities: ['wifi', 'tv', 'geyser', 'parking'], description: 'Premium AC rooms suitable for couples. Conveniently located near transport hubs.', available: 12 },
+            { id: 'R02', name: 'Srinivasam Complex', location: 'Near RTC Bus Stand', type: 'non-ac', price: 600, capacity: 3, amenities: ['tv', 'parking'], description: 'Standard Non-AC rooms with basic amenities. Budget friendly.', available: 45 },
+            { id: 'R03', name: 'Madhavam Complex', location: 'Opp. Railway Station', type: 'ac', price: 1200, capacity: 2, amenities: ['geyser', 'parking'], description: 'Comfortable AC accommodation perfect for train travelers.', available: 8 },
+            { id: 'R04', name: 'Madhavam Complex', location: 'Opp. Railway Station', type: 'non-ac', price: 500, capacity: 2, amenities: ['parking'], description: 'Basic Non-AC rooms. Very close to the railway station.', available: 0 }, // Sold out scenario
+            { id: 'R05', name: 'Nandakam Rest House', location: 'Alipiri Road', type: 'ac', price: 1800, capacity: 4, amenities: ['wifi', 'tv', 'geyser', 'parking', 'restaurant'], description: 'Spacious AC rooms for families. In-house vegetarian dining available.', available: 5 },
+            { id: 'R06', name: 'Padmavati Nilayam', location: 'Tiruchanoor Road', type: 'suite', price: 3000, capacity: 4, amenities: ['wifi', 'tv', 'geyser', 'parking', 'ac'], description: 'Luxury VIP suites with living area. Prior approval required.', available: 2 },
+            { id: 'R07', name: 'Gowindananda', location: 'Temple Steps View', type: 'non-ac', price: 400, capacity: 2, amenities: ['geyser'], description: 'Traditional rest house near the walking path.', available: 110 },
+            { id: 'R08', name: 'Sri Venkateswara Guest House', location: 'Hill Top', type: 'ac', price: 2500, capacity: 3, amenities: ['wifi', 'tv', 'geyser', 'parking'], description: 'Hill-top premium AC accommodation. Excellent view.', available: 15 },
+        ];
+
+        // FAQ Data
+        const faqData = [
+            { q: "How many days in advance can I book Special Entry Darshan?", a: "Tickets are released exactly 120 days in advance. Quotas usually open on the 20th of every month for the subsequent 4th month at 10:00 AM IST." },
+            { q: "Is the dress code strictly enforced?", a: "Yes, absolutely. Men must wear Dhoti/Kurta. Women must wear Saree/Chudidhar with Dupatta. Western wear (Jeans, T-shirts) is strictly prohibited. You will be denied entry at the Vaikuntam Queue Complex without a refund." },
+            { q: "Can I cancel or reschedule my booking?", a: "No. Once booked, all Sevas, Darshan, and Accommodation tickets are strictly non-transferable, non-refundable, and cannot be postponed or advanced under any circumstances." },
+            { q: "What ID proofs are accepted for entry?", a: "Aadhaar Card, Passport, Voter ID, and Driving License are accepted. The ORIGINAL document matching the booking details must be produced at the entry gate. Photocopies or digital copies (unless DigiLocker) are often rejected." },
+            { q: "Are children allowed free entry?", a: "Children under the age of 12 do not require a separate ticket for Darshan. However, authentic age proof (Aadhaar or Birth Certificate) must be carried as security will verify it." },
+            { q: "How many days can I book accommodation for?", a: "To ensure availability for all visiting pilgrims, a maximum stay of 2 days (48 hours) is permitted per registered user in a 90-day window." }
+        ];
+
+        /**
+         * ----------------------------------------------------------------------
+         * INITIALIZATION & ROUTING
+         * ----------------------------------------------------------------------
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup Basic UI requirements
+            const today = new Date().toISOString().split('T')[0];
+            const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+            
+            document.getElementById('seva-date-filter').setAttribute('min', today);
+            document.getElementById('acc-checkin').setAttribute('min', today);
+            document.getElementById('acc-checkin').value = tomorrow; // Default to tomorrow
+            
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Init Icons
+            lucide.createIcons();
+
+            // Setup Routing
+            window.addEventListener('hashchange', handleRoute);
+            handleRoute(); // Execute on initial load
+
+            // Mobile Menu Toggle
+            document.getElementById('mobile-menu-toggle').addEventListener('click', () => {
+                document.getElementById('nav-links').classList.toggle('show');
+            });
+
+            // Scroll Effects
+            setupScrollObserver();
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('main-header');
+                if (window.scrollY > 50) header.classList.add('scrolled');
+                else header.classList.remove('scrolled');
+            });
+
+            // Initialize all dynamic views
+            renderSevas();
+            generateDarshanCalendar();
+            renderAccommodation();
+            renderFAQs();
+            
+            // Add a mock completed booking to demonstrate history UI
+            if(state.bookings.length === 0) {
+                state.bookings.push({
+                    id: 'BKG-778192',
+                    title: 'Special Entry Darshan (2 Pilgrims)',
+                    date: new Date(Date.now() - 86400000 * 15).toLocaleString(),
+                    amount: 600,
+                    status: 'Completed'
+                });
+                renderBookings();
+            }
+        });
+
+        // Hash-based SPA Router
+        function handleRoute() {
+            let hash = window.location.hash.replace('#', '') || 'home';
+            
+            // Hide all views
+            document.querySelectorAll('.page-view').forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            // Show target view, fallback to home
+            const targetView = document.getElementById(`view-${hash}`);
+            if (targetView) {
+                targetView.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Re-trigger scroll animations for elements in the new view
+                setTimeout(() => {
+                    const elements = targetView.querySelectorAll('.animate-on-scroll');
+                    elements.forEach(el => el.classList.add('is-visible'));
+                }, 50);
+            } else {
+                document.getElementById('view-home').classList.add('active');
+                hash = 'home';
+                window.location.hash = 'home';
+            }
+
+            // Update Nav Links Active State
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === `#${hash}`) link.classList.add('active');
+            });
+
+            // Close mobile menu if open
+            document.getElementById('nav-links').classList.remove('show');
+
+            // View specific lifecycle logic
+            if(hash === 'cart') renderCart();
+            if(hash === 'my-bookings') renderBookings();
+        }
+
+        /**
+         * ----------------------------------------------------------------------
+         * ANIMATION & UI UTILS
+         * ----------------------------------------------------------------------
+         */
+        function setupScrollObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // Optional: observer.unobserve(entry.target); to only animate once
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            let icon = 'check-circle';
+            if(type==='error') icon = 'alert-circle';
+            if(type==='warning') icon = 'alert-triangle';
+            if(type==='info') icon = 'info';
+
+            toast.innerHTML = `
+                <i data-lucide="${icon}" style="color: var(--${type === 'error' ? 'danger' : type}); margin-top: 3px;"></i>
+                <div style="flex:1;">
+                    <strong style="display:block; font-size:0.95rem; text-transform:capitalize; margin-bottom:2px;">${type === 'error' ? 'Error' : type}</strong>
+                    <span style="font-size:0.85rem; color:var(--text-muted); line-height: 1.4; display: block;">${message}</span>
+                </div>
+            `;
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            // Trigger animation
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Auto remove
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 500); // Wait for transition
+            }, 4000);
+        }
+
+        function openModal(title, contentHTML, customClass = '') {
+            document.getElementById('modal-title').innerHTML = title;
+            document.getElementById('modal-body').innerHTML = contentHTML;
+            
+            const contentContainer = document.getElementById('modal-container');
+            contentContainer.className = `modal-content ${customClass}`;
+            
+            document.getElementById('generic-modal').classList.add('active');
+            lucide.createIcons();
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('generic-modal').classList.remove('active');
+            document.body.style.overflow = '';
+            
+            // Clear content after animation
+            setTimeout(() => {
+                document.getElementById('modal-body').innerHTML = '';
+            }, 300);
+        }
+
+        /**
+         * ----------------------------------------------------------------------
+         * SEVAS LOGIC
+         * ----------------------------------------------------------------------
+         */
+        function renderSevas(filter = 'all') {
+            const grid = document.getElementById('sevas-grid');
+            grid.innerHTML = '';
+            
+            const filtered = filter === 'all' ? sevasData : sevasData.filter(s => s.type === filter);
+
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div class="lg:col-span-3 empty-state"><p>No sevas found for the selected category.</p></div>`;
+                return;
+            }
+
+            filtered.forEach((seva, index) => {
+                const card = document.createElement('div');
+                card.className = 'card animate-on-scroll';
+                // Staggered animation delay
+                card.style.transitionDelay = `${(index % 3) * 0.1}s`;
+                
+                let badgeClass = 'badge-primary';
+                if(seva.type === 'weekly') badgeClass = 'badge-gold';
+                if(seva.type === 'annual') badgeClass = 'badge-warning';
+
+                card.innerHTML = `
+                    <div class="card-header" style="background: linear-gradient(to right, var(--primary-dark), var(--primary)); color: white;">
+                        <h3 style="color: white; font-size: 1.15rem;">${seva.name}</h3>
+                        <i data-lucide="${seva.icon}" style="opacity:0.8"></i>
+                    </div>
+                    <div class="card-body flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="badge ${badgeClass}">${seva.type}</span>
+                                <span class="text-sm font-semibold" style="color: var(--primary);"><i data-lucide="clock" style="width:14px; display:inline;"></i> ${seva.time}</span>
+                            </div>
+                            <p class="text-muted text-sm mb-4" style="line-height: 1.6;">${seva.description}</p>
+                            <div class="flex items-center gap-2 text-sm text-muted mb-4">
+                                <i data-lucide="users" style="width:16px;"></i> Quota: ${seva.capacity} tickets/day
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center pt-3 mt-auto" style="border-top: 1px dashed var(--border-color);">
+                            <div class="text-xl font-bold" style="color: var(--accent-gold-dark);">₹${seva.price.toLocaleString()}</div>
+                            <button class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;" onclick="addSevaToCart('${seva.id}')">Book Seva</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+            
+            // Re-observe new elements for scroll animation
+            setTimeout(() => {
+                const observer = new IntersectionObserver((e) => e.forEach(en => { if(en.isIntersecting) en.target.classList.add('is-visible'); }));
+                grid.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+            }, 50);
+        }
+
+        document.getElementById('seva-filter').addEventListener('change', (e) => renderSevas(e.target.value));
+
+        /**
+         * ----------------------------------------------------------------------
+         * DARSHAN CALENDAR LOGIC
+         * ----------------------------------------------------------------------
+         */
+        function generateDarshanCalendar() {
+            const grid = document.getElementById('darshan-calendar');
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            
+            // Create Day Headers
+            days.forEach(d => {
+                grid.innerHTML += `<div class="cal-day cal-header">${d}</div>`;
+            });
+
+            // Generate 35 blocks for calendar grid
+            let date = 1;
+            for(let i=0; i<35; i++) {
+                if(i < 2 || date > 30) {
+                    // Empty padding for alignment
+                    grid.innerHTML += `<div style="background:transparent;"></div>`; 
+                } else {
+                    // Randomize status for demonstration purposes
+                    const rand = Math.random();
+                    let statusClass = 'available';
+                    if(rand > 0.6) statusClass = 'fast-filling';
+                    if(rand > 0.85) statusClass = 'full';
+
+                    grid.innerHTML += `<div class="cal-day ${statusClass}" data-date="2026-09-${date.toString().padStart(2, '0')}">${date}</div>`;
+                    date++;
+                }
+            }
+
+            // Bind click events to valid days
+            document.querySelectorAll('.cal-day:not(.cal-header):not(.full)').forEach(el => {
+                if(!el.innerText) return;
+                
+                el.addEventListener('click', function() {
+                    // Remove selection from all
+                    document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
+                    // Select clicked
+                    this.classList.add('selected');
+                    
+                    const selectedDate = this.getAttribute('data-date');
+                    document.getElementById('d-selected-date').value = selectedDate;
+                    
+                    // Enable Form Controls
+                    const timeSelect = document.getElementById('d-time');
+                    timeSelect.disabled = false;
+                    timeSelect.innerHTML = `
+                        <option value="">-- Select Time --</option>
+                        <option value="08:00 AM">08:00 AM - 10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM - 01:00 PM</option>
+                        <option value="02:00 PM">02:00 PM - 04:00 PM</option>
+                        <option value="06:00 PM">06:00 PM - 08:00 PM (Evening)</option>
+                    `;
+                    document.getElementById('d-count').disabled = false;
+                    document.getElementById('d-submit').disabled = false;
+                    
+                    updateDarshanPrice();
+                });
+            });
+        }
+
+        // Darshan Form calculation and submission
+        document.getElementById('d-count').addEventListener('change', updateDarshanPrice);
+
+        function updateDarshanPrice() {
+            const count = parseInt(document.getElementById('d-count').value) || 1;
+            document.getElementById('d-total-cost').textContent = `₹${(300 * count).toLocaleString()}`;
+        }
+
+        document.getElementById('darshan-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const date = document.getElementById('d-selected-date').value;
+            const time = document.getElementById('d-time').value;
+            const count = parseInt(document.getElementById('d-count').value);
+            
+            if(!time) {
+                showToast('Please select a time slot', 'warning');
+                return;
+            }
+
+            const item = {
+                id: 'D-' + Date.now(),
+                name: 'Special Entry Darshan',
+                details: `Date: ${date} | Time: ${time} | Pilgrims: ${count}`,
+                price: 300 * count,
+                type: 'darshan'
+            };
+
+            state.cart.push(item);
+            updateCartUI();
+            showToast('Darshan tickets added to your basket!', 'success');
+            
+            // Reset form gracefully
+            e.target.reset();
+            document.getElementById('d-time').disabled = true;
+            document.getElementById('d-count').disabled = true;
+            document.getElementById('d-submit').disabled = true;
+            document.getElementById('d-total-cost').textContent = '₹0';
+            document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
+        });
+
+
+        /**
+         * ----------------------------------------------------------------------
+         * ACCOMMODATION LOGIC (NEW IMPLEMENTATION)
+         * ----------------------------------------------------------------------
+         */
+        
+        // Render Accommodation Grid based on filters
+        function renderAccommodation() {
+            const grid = document.getElementById('accommodation-grid');
+            grid.innerHTML = '';
+            
+            const typeFilter = document.getElementById('acc-type').value;
+            
+            const filtered = accommodationData.filter(room => {
+                if(typeFilter !== 'all' && room.type !== typeFilter) return false;
+                return true;
+            });
+
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div class="lg:col-span-4 empty-state"><i data-lucide="building"></i><p>No rooms match your filter criteria.</p></div>`;
+                lucide.createIcons();
+                return;
+            }
+
+            filtered.forEach((room, index) => {
+                const card = document.createElement('div');
+                card.className = 'room-card animate-on-scroll';
+                card.style.transitionDelay = `${(index % 4) * 0.1}s`;
+                
+                // Amenities logic
+                const iconMap = { 'wifi': 'wifi', 'tv': 'tv', 'geyser': 'thermometer', 'parking': 'car', 'restaurant': 'utensils', 'ac': 'wind' };
+                let amenitiesHtml = '';
+                room.amenities.forEach(am => {
+                    amenitiesHtml += `<span class="amenity-tag" title="${am}"><i data-lucide="${iconMap[am]}" style="width:12px;"></i> ${am}</span>`;
+                });
+
+                // Availability Logic
+                let bookBtnHtml = `<button class="btn btn-outline" style="padding: 0.5rem 1rem;" onclick="openRoomModal('${room.id}')">Select</button>`;
+                let availabilityHtml = `<span class="text-success text-sm font-semibold">${room.available} Rooms Available</span>`;
+                
+                if(room.available === 0) {
+                    bookBtnHtml = `<button class="btn btn-outline" disabled style="padding: 0.5rem 1rem; color: var(--danger); border-color: var(--danger);">Sold Out</button>`;
+                    availabilityHtml = `<span class="text-danger text-sm font-semibold">Quota Full</span>`;
+                } else if(room.available < 5) {
+                    availabilityHtml = `<span class="text-warning text-sm font-semibold">Fast Filling! Only ${room.available} left</span>`;
+                }
+
+                // Type Badge formatting
+                const typeFormat = room.type.toUpperCase();
+                let badgeStyle = room.type === 'ac' ? 'background: rgba(16, 185, 129, 0.9);' : (room.type === 'suite' ? 'background: rgba(212, 175, 55, 0.9); color: #000;' : '');
+
+                card.innerHTML = `
+                    <div class="room-image-placeholder">
+                        <i data-lucide="building-2" style="width:48px; height:48px; opacity:0.2;"></i>
+                        <span class="room-type-badge" style="${badgeStyle}">${typeFormat}</span>
+                    </div>
+                    <div class="room-body">
+                        <h3 class="room-title">${room.name}</h3>
+                        <div class="room-location"><i data-lucide="map-pin" style="width:14px;"></i> ${room.location}</div>
+                        <div class="room-amenities">
+                            ${amenitiesHtml}
+                        </div>
+                        <p class="text-muted text-sm mb-4" style="flex: 1;">${room.description}</p>
+                        <div class="room-footer">
+                            <div class="room-price-block">
+                                <span class="text-xs text-muted">Tariff / Day</span>
+                                <span class="room-price">₹${room.price.toLocaleString()}</span>
+                            </div>
+                            <div class="flex-col items-end gap-1 text-right">
+                                ${bookBtnHtml}
+                                ${availabilityHtml}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+            
+            // Observe for animations
+            setTimeout(() => {
+                const observer = new IntersectionObserver((e) => e.forEach(en => { if(en.isIntersecting) en.target.classList.add('is-visible'); }));
+                grid.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+            }, 50);
+        }
+
+        // Bind Search Button
+        document.getElementById('acc-search-btn').addEventListener('click', () => {
+            const checkin = document.getElementById('acc-checkin').value;
+            if(!checkin) {
+                showToast('Please select a Check-in date', 'warning');
+                return;
+            }
+            renderAccommodation();
+            
+            // Scroll slightly to results
+            const results = document.getElementById('acc-results-container');
+            results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // Open Room Booking Modal
+        window.openRoomModal = function(roomId) {
+            const room = accommodationData.find(r => r.id === roomId);
+            const checkin = document.getElementById('acc-checkin').value || new Date().toISOString().split('T')[0];
+            const duration = parseInt(document.getElementById('acc-duration').value) || 1;
+            
+            // Calculate checkout date mock
+            const checkoutDateObj = new Date(checkin);
+            checkoutDateObj.setDate(checkoutDateObj.getDate() + duration);
+            const checkout = checkoutDateObj.toISOString().split('T')[0];
+            
+            const totalCost = room.price * duration;
+
+            const modalHtml = `
+                <div class="mb-4">
+                    <h4 class="text-lg text-primary-dark mb-1">${room.name} (${room.type.toUpperCase()})</h4>
+                    <p class="text-muted text-sm"><i data-lucide="map-pin" style="width:12px;"></i> ${room.location}</p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-3 mb-4 bg-alt p-3" style="background: var(--bg-alt); border-radius: var(--radius-md);">
+                    <div>
+                        <span class="text-xs text-muted block">Check-in Date</span>
+                        <strong>${checkin}</strong>
+                    </div>
+                    <div>
+                        <span class="text-xs text-muted block">Check-out Date</span>
+                        <strong>${checkout}</strong>
+                    </div>
+                    <div>
+                        <span class="text-xs text-muted block">Duration</span>
+                        <strong>${duration} Day(s)</strong>
+                    </div>
+                    <div>
+                        <span class="text-xs text-muted block">Max Capacity</span>
+                        <strong>${room.capacity} Persons/Room</strong>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Number of Rooms Required</label>
+                    <select class="form-control" id="modal-room-count" onchange="updateModalPrice(${room.price}, ${duration})">
+                        <option value="1">1 Room</option>
+                        <option value="2">2 Rooms</option>
+                    </select>
+                    <span class="form-text">Max 2 rooms per registered user.</span>
+                </div>
+
+                <div class="flex justify-between items-center mt-4 pt-4" style="border-top: 1px solid var(--border-light);">
+                    <div>
+                        <span class="text-muted block text-sm">Total Cost</span>
+                        <strong class="text-2xl text-gold" id="modal-total-price">₹${totalCost.toLocaleString()}</strong>
+                    </div>
+                    <button class="btn btn-primary" onclick="addRoomToCart('${room.id}', '${checkin}', ${duration})">
+                        <i data-lucide="plus-circle"></i> Add to Cart
+                    </button>
+                </div>
+            `;
+            
+            openModal('Confirm Accommodation', modalHtml);
+        }
+
+        window.updateModalPrice = function(basePrice, duration) {
+            const count = parseInt(document.getElementById('modal-room-count').value) || 1;
+            const total = basePrice * duration * count;
+            document.getElementById('modal-total-price').textContent = `₹${total.toLocaleString()}`;
+        }
+
+
+        /**
+         * ----------------------------------------------------------------------
+         * CART & CHECKOUT LOGIC
+         * ----------------------------------------------------------------------
+         */
+        
+        // Add specific Seva to cart
+        window.addSevaToCart = function(id) {
+            const seva = sevasData.find(s => s.id === id);
+            const item = {
+                id: 'C-' + Date.now() + Math.floor(Math.random()*100),
+                name: seva.name,
+                details: `Reporting Time: ${seva.time} | 1 Ticket`,
+                price: seva.price,
+                type: 'seva'
+            };
+
+            state.cart.push(item);
+            updateCartUI();
+            showToast(`${item.name} added to basket`, 'success');
+        }
+
+        // Add Room to cart from modal
+        window.addRoomToCart = function(roomId, checkin, duration) {
+            const room = accommodationData.find(r => r.id === roomId);
+            const count = parseInt(document.getElementById('modal-room-count').value) || 1;
+            
+            const item = {
+                id: 'A-' + Date.now() + Math.floor(Math.random()*100),
+                name: `${room.name} (${room.type.toUpperCase()})`,
+                details: `In: ${checkin} | ${duration} Day(s) | ${count} Room(s)`,
+                price: room.price * duration * count,
+                type: 'accommodation'
+            };
+
+            state.cart.push(item);
+            updateCartUI();
+            closeModal();
+            showToast(`Accommodation added to basket`, 'success');
+        }
+
+        // Global Cart UI Update
+        function updateCartUI() {
+            const count = state.cart.length;
+            const badge = document.getElementById('cart-count');
+            badge.textContent = count;
+            
+            // Animate badge
+            badge.classList.remove('d-none');
+            badge.classList.remove('bump');
+            void badge.offsetWidth; // trigger reflow
+            badge.classList.add('bump');
+            
+            // Re-render if currently on cart view
+            if(window.location.hash === '#cart') {
+                renderCart();
+            }
+        }
+
+        function removeFromCart(id) {
+            state.cart = state.cart.filter(item => item.id !== id);
+            updateCartUI();
+            showToast('Item removed from basket', 'info');
+        }
+
+        // Render Cart View details
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const subtotalEl = document.getElementById('cart-subtotal');
+            const totalEl = document.getElementById('cart-total');
+            const donationDisp = document.getElementById('cart-donation-disp');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            if(state.cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state border-0">
+                        <i data-lucide="shopping-basket"></i>
+                        <h4 class="text-xl">Your Sacred Basket is Empty</h4>
+                        <p class="mt-2 mb-4">Please add Sevas, Darshan, or Accommodation to proceed.</p>
+                        <button class="btn btn-outline" onclick="window.location.hash='home'">Browse Services</button>
+                    </div>
+                `;
+                subtotalEl.textContent = '₹0';
+                donationDisp.textContent = '₹0';
+                totalEl.textContent = '₹0';
+                checkoutBtn.disabled = true;
+                lucide.createIcons();
+                return;
+            }
+
+            let html = '<ul style="list-style:none; padding:0; margin:0;">';
+            let subtotal = 0;
+
+            state.cart.forEach(item => {
+                subtotal += item.price;
+                
+                // Determine icon based on type
+                let icon = 'ticket';
+                if(item.type === 'accommodation') icon = 'building';
+                if(item.type === 'seva') icon = 'sparkles';
+
+                html += `
+                    <li style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; transition: background 0.2s;" onmouseover="this.style.background='var(--bg-alt)'" onmouseout="this.style.background='transparent'">
+                        <div class="flex items-start gap-3">
+                            <div style="background: var(--primary-light); color: var(--primary); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <i data-lucide="${icon}"></i>
+                            </div>
+                            <div>
+                                <strong style="display:block; color:var(--primary-dark); font-size:1.05rem; margin-bottom:2px;">${item.name}</strong>
+                                <span class="text-sm text-muted">${item.details}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <strong class="text-lg">₹${item.price.toLocaleString()}</strong>
+                            <button class="modal-close" style="width:32px; height:32px;" onclick="removeFromCart('${item.id}')" title="Remove Item">
+                                <i data-lucide="trash-2" style="width:16px; height:16px;"></i>
+                            </button>
+                        </div>
+                    </li>
+                `;
+            });
+            html += '</ul>';
+            container.innerHTML = html;
+
+            // Handle Totals calculation
+            const donation = parseInt(document.getElementById('donation-amount').value) || 0;
+            const total = subtotal + donation;
+
+            subtotalEl.textContent = `₹${subtotal.toLocaleString()}`;
+            donationDisp.textContent = `₹${donation.toLocaleString()}`;
+            totalEl.textContent = `₹${total.toLocaleString()}`;
+            checkoutBtn.disabled = false;
+            
+            lucide.createIcons();
+        }
+
+        // Listen for donation changes
+        document.getElementById('donation-amount').addEventListener('change', renderCart);
+
+        // Simulated Checkout Process
+        // Handle Checkout securely
+document.getElementById('checkout-btn').addEventListener('click', async () => {
+    const token = localStorage.getItem('token');
+    
+    // Check if user is logged in
+    if (!token) {
+        showToast('Please log in to complete your booking.', 'warning');
+        setTimeout(() => window.location.href = 'login.html', 1500);
+        return;
+    }
+
+    const btn = document.getElementById('checkout-btn');
+    btn.disabled = true;
+    btn.innerHTML = `<i data-lucide="loader" class="pulse-btn" style="animation: rotateSlow 2s linear infinite;"></i> Processing Securely...`;
+    
+    const donation = parseInt(document.getElementById('donation-amount').value) || 0;
+    const subtotal = state.cart.reduce((sum, item) => sum + item.price, 0);
+    const totalAmount = subtotal + donation;
+
+    try {
+        // Send cart data to our backend
+        const response = await fetch('http://localhost:5000/api/bookings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token // Pass the JWT token for security
+            },
+            body: JSON.stringify({
+                items: state.cart,
+                donationAmount: donation,
+                totalAmount: totalAmount
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            state.cart = []; // Clear local cart
+            document.getElementById('donation-amount').value = "0";
+            updateCartUI();
+            
+            showToast('Payment Successful! May the Lord bless you.', 'success');
+            
+            // Show Success Modal
+            openModal('<i data-lucide="check-circle" class="text-success inline-icon"></i> Booking Confirmed', `
+                <div class="text-center py-4">
+                    <h2 style="color:var(--success); margin-bottom: 0.5rem;">Om Namo Venkateshaya</h2>
+                    <p class="text-lg mt-2 mb-4">Your transaction was successful.</p>
+                    <div class="bg-alt p-3 rounded mb-4 inline-block" style="border: 1px dashed var(--border-color);">
+                        <span class="text-sm text-muted block mb-1">Master Booking Reference</span>
+                        <strong class="text-2xl text-primary-dark">${data.bookingReference}</strong>
+                    </div>
+                    <div class="flex justify-center gap-3">
+                        <button class="btn btn-primary" onclick="closeModal(); fetchMyBookings(); window.location.hash='my-bookings';">View Dashboard</button>
+                    </div>
+                </div>
+            `);
+        } else {
+            showToast(data.message || 'Booking failed.', 'error');
+        }
+    } catch (error) {
+        showToast('Network error during checkout.', 'error');
+    } finally {
+        btn.innerHTML = `Proceed to Pilgrim Details <i data-lucide="arrow-right"></i>`;
+        btn.disabled = false;
+        lucide.createIcons();
+    }
+});
+
+// Function to fetch booking history from the database
+async function fetchMyBookings() {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+        const response = await fetch('http://localhost:5000/api/bookings', {
+            headers: { 'x-auth-token': token }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            // Map the database data to fit your existing UI state
+            state.bookings = data.map(b => ({
+                id: b.bookingReference,
+                title: b.items.length > 0 ? b.items[0].name + (b.items.length > 1 ? ` + ${b.items.length - 1} more` : '') : 'Donation',
+                date: new Date(b.createdAt).toLocaleString(),
+                amount: b.totalAmount,
+                status: b.status
+            }));
+            renderBookings();
+        }
+    } catch (error) {
+        console.error('Error fetching bookings:', error);
+    }
+}
+
+// Update the mock sync button to use the real fetch function
+window.generateMockBooking = function() {
+    const btn = document.querySelector('#view-my-bookings .btn-outline i');
+    btn.style.animation = 'rotateSlow 1s linear infinite';
+    fetchMyBookings().then(() => {
+        showToast('Records synced successfully from Server', 'success');
+        btn.style.animation = 'none';
+    });
+}
+
+// Call fetchMyBookings when the page loads if the user is logged in
+if(localStorage.getItem('token')) {
+    fetchMyBookings();
+}
+        /**
+         * ----------------------------------------------------------------------
+         * MY BOOKINGS & TICKETING LOGIC
+         * ----------------------------------------------------------------------
+         */
+        function renderBookings() {
+            const tbody = document.querySelector('#bookings-table tbody');
+            const emptyMsg = document.getElementById('no-bookings-msg');
+            const table = document.getElementById('bookings-table');
+
+            tbody.innerHTML = '';
+
+            if(state.bookings.length === 0) {
+                table.parentElement.classList.add('d-none');
+                emptyMsg.classList.remove('d-none');
+                return;
+            }
+
+            table.parentElement.classList.remove('d-none');
+            emptyMsg.classList.add('d-none');
+
+            state.bookings.forEach(b => {
+                const tr = document.createElement('tr');
+                
+                // Status Badge Logic
+                let statusBadge = `<span class="badge badge-success">${b.status}</span>`;
+                if(b.status === 'Cancelled') statusBadge = `<span class="badge badge-danger">${b.status}</span>`;
+                if(b.status === 'Pending') statusBadge = `<span class="badge badge-warning">${b.status}</span>`;
+                
+                tr.innerHTML = `
+                    <td style="font-family: monospace; font-size: 1.1rem; color: var(--primary-dark);"><strong>${b.id}</strong></td>
+                    <td><strong>${b.title}</strong></td>
+                    <td class="text-muted text-sm">${b.date}</td>
+                    <td class="font-semibold text-gold">₹${b.amount.toLocaleString()}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <button class="btn btn-outline" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;" onclick="viewTicket('${b.id}', '${b.title}', ${b.amount})">
+                            <i data-lucide="download" style="width:14px;"></i> e-Ticket
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            lucide.createIcons();
+        }
+
+        // Simulated Sync Function
+        window.generateMockBooking = function() {
+            const btn = document.querySelector('#view-my-bookings .btn-outline i');
+            btn.style.animation = 'rotateSlow 1s linear infinite';
+            
+            setTimeout(() => {
+                showToast('Records synced successfully from Central Server', 'success');
+                btn.style.animation = 'none';
+                renderBookings(); // re-render just to be sure
+            }, 1200);
+        }
+
+        // Simulated Ticket PDF Rendering within Modal
+        window.viewTicket = function(id, title, amount) {
+            const today = new Date().toLocaleDateString('en-IN');
+            
+            const ticketHTML = `
+                <div class="ticket-preview" id="printable-ticket">
+                    <div class="ticket-header">
+                        <h2 style="font-family: var(--font-heading); color: var(--primary-dark); font-size: 1.5rem; letter-spacing: 1px;">DIVYA DARSHANAM TRUST BOARD</h2>
+                        <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Official e-Ticket for Pilgrim Entry</p>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+                        <div>
+                            <span style="display:block; font-size:0.75rem; color:var(--text-muted);">Booking Reference</span>
+                            <strong style="font-size:1.2rem; font-family:monospace;">${id}</strong>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="display:block; font-size:0.75rem; color:var(--text-muted);">Booking Date</span>
+                            <strong>${today}</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="ticket-row">
+                        <span style="color:var(--text-muted);">Service Details:</span> 
+                        <strong style="color:var(--primary-dark);">${title}</strong>
+                    </div>
+                    <div class="ticket-row">
+                        <span style="color:var(--text-muted);">Primary Pilgrim:</span> 
+                        <strong>Devotee Name (Self)</strong>
+                    </div>
+                    <div class="ticket-row">
+                        <span style="color:var(--text-muted);">Amount Paid:</span> 
+                        <strong>₹${amount.toLocaleString()}</strong>
+                    </div>
+                    
+                    <div class="barcode"></div>
+                    
+                    <div style="background: var(--bg-alt); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.75rem; margin-top: 1rem; color: var(--text-muted); text-align: justify; line-height: 1.5;">
+                        <strong style="color: var(--danger); display:block; margin-bottom: 5px;">IMPORTANT INSTRUCTIONS:</strong>
+                        1. This is a computer generated document. Produce this physically along with original Government ID proof at the entry complex.<br>
+                        2. Dress code is strictly mandatory. Men: Dhoti/Kurta, Women: Saree/Chudidhar. Non-compliance leads to rejection without refund.<br>
+                        3. Electronic gadgets, mobiles, and large baggage must be deposited at safety lockers prior to entering queues.<br>
+                        4. This ticket is purely non-transferable.
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary" onclick="window.print()"><i data-lucide="printer"></i> Print / Save as PDF</button>
+                    <button class="btn btn-outline ml-2" onclick="closeModal()">Close</button>
+                </div>
+            `;
+            openModal('<i data-lucide="file-text" class="text-primary inline-icon"></i> Document Viewer', ticketHTML, 'modal-lg');
+        }
+
+        /**
+         * ----------------------------------------------------------------------
+         * HELP / CONTACT LOGIC
+         * ----------------------------------------------------------------------
+         */
+        function renderFAQs() {
+            const container = document.getElementById('faq-accordion');
+            faqData.forEach((faq, i) => {
+                const item = document.createElement('div');
+                item.className = 'accordion-item';
+                // Only open the first one by default
+                if(i === 0) item.classList.add('active');
+                
+                item.innerHTML = `
+                    <div class="accordion-header" onclick="this.parentElement.classList.toggle('active')">
+                        ${faq.q}
+                        <i data-lucide="chevron-down" class="accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            ${faq.a}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+            lucide.createIcons();
+        }
+
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i data-lucide="loader" class="pulse-btn" style="animation: rotateSlow 2s linear infinite;"></i> Processing Submission...`;
+            btn.disabled = true;
+
+            setTimeout(() => {
+                showToast('Grievance ticket raised successfully. Reference ID sent to mobile.', 'success');
+                e.target.reset();
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                lucide.createIcons();
+            }, 1800);
+        });
+
+    </script>
+</body>
+</html>

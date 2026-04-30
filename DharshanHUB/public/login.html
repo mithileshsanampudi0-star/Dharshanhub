@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up - DHARSHAN HUB Portal</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & BASE SETUP
+           ========================================================================== */
+        :root {
+            /* Theme matching your main website */
+            --maroon-dark: #4a0404;
+            --maroon: #8a1c1c;
+            --maroon-light: #fdf2f2;
+            --gold: #d4af37;
+            --gold-light: #fff9e6;
+            --gold-dark: #b89628;
+            
+            /* UI Colors */
+            --bg-main: #ffffff;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            
+            /* Status */
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+
+            /* Typography */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Lato', sans-serif;
+            
+            /* Shadows & Border Radius */
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-gold: 0 4px 14px 0 rgba(212, 175, 55, 0.39);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { font-family: var(--font-heading); color: var(--maroon-dark); }
+        a { text-decoration: none; transition: color 0.2s ease; }
+        button, input { font-family: inherit; border: none; outline: none; }
+        button { cursor: pointer; }
+
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .text-muted { color: var(--text-muted); }
+        .mb-1 { margin-bottom: 0.5rem; } .mb-2 { margin-bottom: 1rem; } .mb-3 { margin-bottom: 1.5rem; } .mb-4 { margin-bottom: 2rem; }
+
+        /* ==========================================================================
+           2. ANIMATIONS & BACKGROUNDS
+           ========================================================================== */
+        @keyframes rotateSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); } 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } }
+
+        .pattern-bg {
+            background-image: 
+                radial-gradient(var(--gold) 1px, transparent 1px),
+                radial-gradient(var(--gold) 1px, transparent 1px);
+            background-position: 0 0, 20px 20px;
+            background-size: 40px 40px;
+            background-color: var(--maroon-light);
+            opacity: 0.9;
+        }
+
+        .mandala-bg {
+            background: linear-gradient(135deg, var(--maroon-dark) 0%, var(--maroon) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mandala-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: repeating-radial-gradient( circle at center, transparent 0, transparent 40px, rgba(212, 175, 55, 0.08) 40px, rgba(212, 175, 55, 0.08) 80px );
+            animation: rotateSlow 120s linear infinite;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           3. AUTHENTICATION LAYOUT
+           ========================================================================== */
+        .auth-wrapper {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        /* Left Side Banner (Hidden on Mobile) */
+        .auth-banner {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 4rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (min-width: 1024px) { .auth-banner { display: flex; } }
+
+        .auth-banner h1 { color: white; font-size: 3.5rem; margin-bottom: 1rem; text-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .auth-banner p { font-size: 1.25rem; opacity: 0.9; max-width: 500px; }
+        
+        .auth-banner-icon {
+            width: 120px; height: 120px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-gold);
+            animation: pulseGlow 3s infinite;
+        }
+
+        /* Right Side Form Container */
+        .auth-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .auth-form-container {
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            padding: 3rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .auth-header { text-align: center; margin-bottom: 2.5rem; }
+        .auth-header h2 { font-size: 2.2rem; color: var(--maroon-dark); margin-bottom: 0.5rem; }
+        .auth-header p { color: var(--text-muted); font-size: 1.1rem; }
+
+        .form-section { transition: opacity 0.3s ease; }
+        .d-none { display: none !important; }
+
+        /* ==========================================================================
+           4. FORM COMPONENTS
+           ========================================================================== */
+        .form-group { margin-bottom: 1.5rem; position: relative; }
+        .form-label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-main); font-size: 0.95rem; }
+        
+        .input-icon-wrapper { position: relative; }
+        .input-icon-wrapper i {
+            position: absolute; top: 50%; left: 1rem; transform: translateY(-50%);
+            color: var(--text-muted); width: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 3rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: #f8fafc;
+            color: var(--text-main);
+        }
+
+        .form-control:focus {
+            background: white;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        .form-control.error { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1); background: #fef2f2; }
+        .form-control.success { border-color: var(--success); }
+
+        .password-toggle {
+            position: absolute; top: 50%; right: 1rem; transform: translateY(-50%);
+            background: none; color: var(--text-muted); padding: 0; transition: color 0.2s;
+        }
+        .password-toggle:hover { color: var(--maroon); }
+
+        .error-text { color: var(--danger); font-size: 0.8rem; margin-top: 0.25rem; display: none; font-weight: 600; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            width: 100%; height: 50px;
+            border-radius: var(--radius-md); font-weight: 700; font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none !important; }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--maroon), var(--maroon-dark));
+            color: white; box-shadow: var(--shadow-md);
+        }
+        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-xl); }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: white; box-shadow: var(--shadow-gold);
+        }
+        .btn-gold:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.1); }
+
+        /* Password Strength */
+        .pwd-strength-meter { height: 4px; background: var(--border-color); border-radius: 2px; margin-top: 0.5rem; display: flex; overflow: hidden; }
+        .pwd-strength-bar { height: 100%; width: 0; transition: all 0.3s ease; }
+        .pwd-strength-text { font-size: 0.75rem; text-align: right; margin-top: 0.25rem; font-weight: 600; }
+
+        /* Auth Switch */
+        .auth-switch { text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 1rem; }
+        .auth-switch a { color: var(--maroon); font-weight: 700; cursor: pointer; border-bottom: 2px solid transparent; }
+        .auth-switch a:hover { border-color: var(--maroon); }
+
+        /* Layout Grid for Register Form */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+        /* Toast Notifications */
+        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        .toast {
+            min-width: 300px; background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-xl);
+            padding: 1rem; display: flex; align-items: center; gap: 1rem;
+            transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-left: 4px solid var(--success);
+        }
+        .toast.show { transform: translateX(0); }
+        .toast.error { border-left-color: var(--danger); }
+        .toast.info { border-left-color: var(--info); }
+    </style>
+</head>
+<body>
+
+    <div class="auth-wrapper">
+        
+        <!-- Left Banner Animation -->
+        <div class="auth-banner mandala-bg">
+            <div class="auth-banner-icon">
+                <i data-lucide="flower-2" style="width: 60px; height: 60px; color: white;"></i>
+            </div>
+            <h1>DHARSHAN HUB</h1>
+            <p>Your spiritual journey begins here. Log in or create an account to book Sevas and Darshan.</p>
+            
+            <div style="margin-top: 3rem; background: rgba(0,0,0,0.25); padding: 1.5rem 2rem; border-radius: var(--radius-lg); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="flex items-center gap-2 mb-2">
+                    <i data-lucide="shield-check" style="color: var(--success);"></i>
+                    <span style="font-weight: 600; letter-spacing: 1px;">100% SECURE CHECKOUT</span>
+                </div>
+                <p style="font-size: 0.95rem; text-align: left; opacity: 0.8;">Transactions are end-to-end encrypted and secured by the Temple Trust.</p>
+            </div>
+        </div>
+
+        <!-- Right Form Area -->
+        <div class="auth-content pattern-bg">
+            <div class="auth-form-container">
+                
+                <!-- ================= LOGIN SECTION ================= -->
+                <div id="login-section" class="form-section">
+                    <div class="auth-header">
+                        <h2>Welcome Back</h2>
+                        <p>Sign in to manage your bookings</p>
+                    </div>
+
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label class="form-label">Email or Mobile Number</label>
+                            <div class="input-icon-wrapper">
+                                <i data-lucide="user"></i>
+                                <input type="text" class="form-control" id="login-identifier" required placeholder="Enter registered details">
+                            </div>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="form-label">Password</label>
+                            <div class="input-icon-wrapper">
+                                <i data-lucide="lock"></i>
+                                <input type="password" class="form-control" id="login-password" required placeholder="Enter your password">
+                                <button type="button" class="password-toggle" onclick="togglePassword('login-password', this)"><i data-lucide="eye"></i></button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center mb-4" style="font-size: 0.9rem;">
+                            <label class="flex items-center gap-2 cursor-pointer text-muted">
+                                <input type="checkbox" checked style="accent-color: var(--maroon); width: 16px; height: 16px;">
+                                Remember me
+                            </label>
+                            <a href="#" style="color: var(--maroon); font-weight: 600;" onclick="showToast('Password reset link sent.', 'info'); return false;">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            Sign In <i data-lucide="arrow-right"></i>
+                        </button>
+                    </form>
+
+                    <div class="auth-switch">
+                        New devotee? <a onclick="toggleAuthView('register')">Create an Account</a>
+                    </div>
+                </div>
+
+                <!-- ================= REGISTER SECTION ================= -->
+                <div id="register-section" class="form-section d-none">
+                    <div class="auth-header">
+                        <h2>Create Account</h2>
+                        <p>Register for seamless Darshan booking</p>
+                    </div>
+
+                    <form id="register-form">
+                        <div class="form-group">
+                            <label class="form-label">Full Name (As per Govt. ID)</label>
+                            <div class="input-icon-wrapper">
+                                <i data-lucide="user"></i>
+                                <input type="text" class="form-control" id="reg-name" required placeholder="Sri / Smt">
+                            </div>
+                        </div>
+
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Mobile Number</label>
+                                <div class="input-icon-wrapper">
+                                    <i data-lucide="phone"></i>
+                                    <input type="tel" class="form-control" id="reg-mobile" required placeholder="10-digit number">
+                                </div>
+                                <span class="error-text" id="err-mobile">Invalid Indian mobile number.</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <div class="input-icon-wrapper">
+                                    <i data-lucide="mail"></i>
+                                    <input type="email" class="form-control" id="reg-email" required placeholder="email@domain.com">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-1">
+                            <label class="form-label">Create Password</label>
+                            <div class="input-icon-wrapper">
+                                <i data-lucide="lock"></i>
+                                <input type="password" class="form-control" id="reg-pwd" required placeholder="Minimum 8 characters">
+                                <button type="button" class="password-toggle" onclick="togglePassword('reg-pwd', this)"><i data-lucide="eye"></i></button>
+                            </div>
+                            <div class="pwd-strength-meter">
+                                <div class="pwd-strength-bar" id="pwd-bar"></div>
+                            </div>
+                            <div class="pwd-strength-text text-muted" id="pwd-text">Password Strength</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password</label>
+                            <div class="input-icon-wrapper">
+                                <i data-lucide="shield-check"></i>
+                                <input type="password" class="form-control" id="reg-pwd-confirm" required placeholder="Re-enter password">
+                            </div>
+                            <span class="error-text" id="err-pwd-match">Passwords do not match.</span>
+                        </div>
+
+                        <button type="submit" class="btn btn-gold" id="btn-register" disabled>
+                            Complete Registration <i data-lucide="user-plus"></i>
+                        </button>
+                    </form>
+
+                    <div class="auth-switch">
+                        Already registered? <a onclick="toggleAuthView('login')">Sign In here</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container"></div>
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // Initialize Icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            setupFormValidations();
+        });
+
+        // UPDATED: Redirects to your main website index.html
+        const REDIRECT_URL = 'index.html'; 
+
+        // Toggle between Login and Register Views
+        function toggleAuthView(view) {
+            const loginSec = document.getElementById('login-section');
+            const regSec = document.getElementById('register-section');
+            const formContainer = document.querySelector('.auth-form-container');
+            
+            // Add a slight animation effect when switching
+            formContainer.style.animation = 'none';
+            formContainer.offsetHeight; // trigger reflow
+            formContainer.style.animation = 'fadeIn 0.4s ease-out';
+
+            if(view === 'register') {
+                loginSec.classList.add('d-none');
+                regSec.classList.remove('d-none');
+            } else {
+                regSec.classList.add('d-none');
+                loginSec.classList.remove('d-none');
+            }
+        }
+
+        // Toggle Password Visibility
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                input.type = 'password';
+                icon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
+        }
+
+        // Setup Real-time Form Validations
+        function setupFormValidations() {
+            // 1. Mobile Number Validation
+            const mobileInput = document.getElementById('reg-mobile');
+            mobileInput.addEventListener('input', (e) => {
+                const val = e.target.value;
+                const err = document.getElementById('err-mobile');
+                // Regex for standard Indian 10-digit mobile number
+                if(val.length > 0 && !/^[6-9]\d{9}$/.test(val)) {
+                    e.target.classList.add('error'); e.target.classList.remove('success');
+                    err.style.display = 'block';
+                } else if(val.length === 10) {
+                    e.target.classList.remove('error'); e.target.classList.add('success');
+                    err.style.display = 'none';
+                } else {
+                    e.target.classList.remove('error', 'success');
+                    err.style.display = 'none';
+                }
+                checkRegFormValidity();
+            });
+
+            // 2. Password Strength Meter
+            const pwdInput = document.getElementById('reg-pwd');
+            pwdInput.addEventListener('input', (e) => {
+                const val = e.target.value;
+                const bar = document.getElementById('pwd-bar');
+                const txt = document.getElementById('pwd-text');
+                
+                let strength = 0;
+                if(val.length >= 8) strength += 25;
+                if(val.match(/[A-Z]/)) strength += 25;
+                if(val.match(/[0-9]/)) strength += 25;
+                if(val.match(/[^A-Za-z0-9]/)) strength += 25;
+
+                bar.style.width = strength + '%';
+                
+                if(val.length === 0) { 
+                    bar.style.width = '0%'; txt.textContent = 'Password Strength'; bar.style.background = 'transparent'; 
+                }
+                else if(strength <= 25) { bar.style.background = 'var(--danger)'; txt.textContent = 'Weak'; txt.style.color = 'var(--danger)'; }
+                else if(strength <= 50) { bar.style.background = 'var(--warning)'; txt.textContent = 'Fair'; txt.style.color = 'var(--warning)'; }
+                else if(strength <= 75) { bar.style.background = 'var(--info)'; txt.textContent = 'Good'; txt.style.color = 'var(--info)'; }
+                else { bar.style.background = 'var(--success)'; txt.textContent = 'Strong'; txt.style.color = 'var(--success)'; }
+                
+                checkPwdMatch();
+                checkRegFormValidity();
+            });
+
+            // 3. Password Match Validation
+            document.getElementById('reg-pwd-confirm').addEventListener('input', checkPwdMatch);
+        }
+
+        function checkPwdMatch() {
+            const pwd = document.getElementById('reg-pwd').value;
+            const confirm = document.getElementById('reg-pwd-confirm').value;
+            const confirmInput = document.getElementById('reg-pwd-confirm');
+            const err = document.getElementById('err-pwd-match');
+            
+            if(confirm.length > 0) {
+                if(pwd !== confirm) {
+                    confirmInput.classList.add('error'); confirmInput.classList.remove('success');
+                    err.style.display = 'block';
+                } else {
+                    confirmInput.classList.remove('error'); confirmInput.classList.add('success');
+                    err.style.display = 'none';
+                }
+            } else {
+                confirmInput.classList.remove('error', 'success');
+                err.style.display = 'none';
+            }
+            checkRegFormValidity();
+        }
+
+        // Enable/Disable Register Button based on validity
+        function checkRegFormValidity() {
+            const isMobileValid = document.getElementById('reg-mobile').classList.contains('success');
+            const isPwdValid = document.getElementById('reg-pwd').value.length >= 8;
+            const isMatchValid = document.getElementById('reg-pwd-confirm').classList.contains('success');
+            
+            document.getElementById('btn-register').disabled = !(isMobileValid && isPwdValid && isMatchValid);
+        }
+
+        // ================= FORM SUBMISSIONS =================
+
+       // Inside login.html -> <script> tag -> Update the login form submission
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const identifier = document.getElementById('login-identifier').value;
+    const password = document.getElementById('login-password').value;
+    
+    btn.innerHTML = `<i data-lucide="loader" style="animation: rotateSlow 2s linear infinite;"></i> Authenticating...`;
+    btn.disabled = true;
+
+    try {
+        const response = await fetch('http://localhost:5000/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ identifier, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            // Save the JWT token to the browser's local storage
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            
+            showToast('Login Successful! Redirecting...', 'success');
+            setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+        } else {
+            showToast(data.message || 'Login failed', 'error');
+            btn.innerHTML = `Sign In <i data-lucide="arrow-right"></i>`;
+            btn.disabled = false;
+        }
+    } catch (error) {
+        showToast('Server error. Please try again.', 'error');
+        btn.innerHTML = `Sign In <i data-lucide="arrow-right"></i>`;
+        btn.disabled = false;
+    }
+});
+
+        // Handle Registration
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    
+    // Grab the values from the form inputs
+    const name = document.getElementById('reg-name').value;
+    const mobile = document.getElementById('reg-mobile').value;
+    const email = document.getElementById('reg-email').value;
+    const password = document.getElementById('reg-pwd').value;
+    
+    // Animation state
+    btn.innerHTML = `<i data-lucide="loader" style="animation: rotateSlow 2s linear infinite;"></i> Creating Account...`;
+    btn.disabled = true;
+    lucide.createIcons();
+
+    try {
+        // Send the data to our Node.js backend
+        const response = await fetch('http://localhost:5000/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, mobile, email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            showToast('Account Created Successfully! Please Sign In.', 'success');
+            
+            // Switch back to the login view so they can log in
+            setTimeout(() => {
+                toggleAuthView('login');
+                e.target.reset(); // Clear the registration form
+                
+                // Reset button state silently
+                btn.innerHTML = `Complete Registration <i data-lucide="user-plus"></i>`;
+                btn.disabled = false;
+            }, 1500);
+        } else {
+            // Show error from backend (e.g., "User already exists")
+            showToast(data.message || 'Registration failed', 'error');
+            btn.innerHTML = `Complete Registration <i data-lucide="user-plus"></i>`;
+            btn.disabled = false;
+        }
+    } catch (error) {
+        showToast('Server error. Please check your connection.', 'error');
+        btn.innerHTML = `Complete Registration <i data-lucide="user-plus"></i>`;
+        btn.disabled = false;
+    }
+});
+
+        // ================= UI UTILS =================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            let iconName = 'check-circle';
+            if(type === 'error') iconName = 'alert-circle';
+            if(type === 'info') iconName = 'info';
+
+            toast.innerHTML = `
+                <i data-lucide="${iconName}" style="color: var(--${type === 'error' ? 'danger' : type})"></i>
+                <div>
+                    <strong style="display:block; font-size:0.95rem; text-transform:capitalize;">${type === 'error' ? 'Error' : type}</strong>
+                    <span style="font-size:0.85rem; color:var(--text-muted);">${message}</span>
+                </div>
+            `;
+            
+            container.appendChild(toast); 
+            lucide.createIcons();
+            
+            // Trigger animation
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => { 
+                toast.classList.remove('show'); 
+                setTimeout(() => toast.remove(), 400); 
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
